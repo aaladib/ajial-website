@@ -244,7 +244,7 @@ function Hero() {
   return (
     <section id="home" className="hero">
       <div className="container hero-content">
-        <p className="hero-eyebrow">شركة مقاولات عامة — الرياض، المملكة العربية السعودية</p>
+        <p className="hero-eyebrow">مقاولات عامة | أعمال معدنية | مقاولات إنشائية | تشطيبات</p>
         <h1>شركة أجيال المتطورة للاستثمار</h1>
         <p className="hero-subtitle">
           مقاولات معدنية، وأعمال إنشائية، وتشطيبات — تحت مظلة عمل واحدة.
