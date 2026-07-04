@@ -37,6 +37,7 @@ const NAV_LINKS = [
   { id: "home", label: "الرئيسية", href: "#home" },
   { id: "about", label: "من نحن", href: "#about" },
   { id: "sectors", label: "قطاعات الأعمال", href: "#sectors" },
+  { id: "workshop", label: "ورشة الحديد", href: "#workshop" },
   { id: "methodology", label: "منهجية العمل", href: "#methodology" },
   { id: "projects", label: "معرض المشاريع", href: "#projects" },
   { id: "why", label: "لماذا أجيال", href: "#why" },
@@ -116,6 +117,15 @@ const METHODOLOGY_STEPS = [
     title: "التسليم والمتابعة",
     description: "تسليم العمل للعميل والمتابعة بعد التسليم عند الحاجة.",
   },
+];
+
+const WORKSHOP_IMAGES = [
+  { id: 1, image: "/projects/steeling-02.png", caption: "قص وتشكيل الحديد" },
+  { id: 2, image: "/projects/steeling-01.jpeg", caption: "أعمال اللحام" },
+  { id: 3, image: "/projects/steeling-03.png", caption: "تجهيز ومعالجة السطح" },
+  { id: 4, image: "/projects/steeling-015.png", caption: "الطلاء والدهان" },
+  { id: 5, image: "/projects/steeling-04.png", caption: "التحميل والنقل" },
+  { id: 6, image: "/projects/steeling-06.jpeg", caption: "خارج الورشة" },
 ];
 
 const PROJECTS = [
@@ -334,6 +344,31 @@ function Sectors() {
   );
 }
 
+function Workshop() {
+  return (
+    <section id="workshop" className="section workshop">
+      <div className="container">
+        <div className="section-heading section-heading-light">
+          <span className="section-label">أعمال الحديد في ورشتنا</span>
+          <h2>ورشة الحديد - الرياض</h2>
+        </div>
+        <p className="workshop-intro">
+          ننفّذ مراحل تصنيع وتجهيز الحديد داخل ورشتنا بالرياض، من القص واللحام
+          حتى المعالجة والطلاء والتحميل.
+        </p>
+        <div className="workshop-grid">
+          {WORKSHOP_IMAGES.map((item, index) => (
+            <Reveal key={item.id} className="workshop-item" delay={(index % 3) * 100}>
+              <img src={item.image} alt={item.caption} className="workshop-image" loading="lazy" />
+              <span className="workshop-caption">{item.caption}</span>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Methodology() {
   return (
     <section id="methodology" className="section methodology">
@@ -537,6 +572,7 @@ export default function App() {
         <Hero />
         <About />
         <Sectors />
+        <Workshop />
         <Methodology />
         <Projects />
         <WhyAjial />
