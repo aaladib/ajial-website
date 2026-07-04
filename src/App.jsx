@@ -118,30 +118,48 @@ const METHODOLOGY_STEPS = [
   },
 ];
 
-const PROJECT_PLACEHOLDERS = [
+const PROJECTS = [
   {
     id: 1,
-    title: "مشروع أعمال معدنية",
-    sector: "الأعمال المعدنية",
-    description: "نموذج بطاقة مشروع ضمن قطاع الأعمال المعدنية، بانتظار إضافة تفاصيل المشروع الفعلي.",
+    image: "/projects/steel-01.png",
+    title: "أعمال معدنية",
+    description: "من أعمال الشركة في تنفيذ الهياكل والتوصيلات المعدنية.",
     location: "الرياض، المملكة العربية السعودية",
-    status: "نموذج - سيتم التحديث",
   },
   {
     id: 2,
-    title: "مشروع مقاولات إنشائية",
-    sector: "المقاولات الإنشائية",
-    description: "نموذج بطاقة مشروع ضمن قطاع المقاولات الإنشائية، بانتظار إضافة تفاصيل المشروع الفعلي.",
+    image: "/projects/steel-02.png",
+    title: "هناجر ومستودعات",
+    description: "من أعمال الشركة في تنفيذ الهياكل المعدنية للهناجر والمستودعات.",
     location: "الرياض، المملكة العربية السعودية",
-    status: "نموذج - سيتم التحديث",
   },
   {
     id: 3,
-    title: "مشروع تشطيبات",
-    sector: "أعمال التشطيب",
-    description: "نموذج بطاقة مشروع ضمن قطاع أعمال التشطيب، بانتظار إضافة تفاصيل المشروع الفعلي.",
+    image: "/projects/sandwich-panel-01.jpeg",
+    title: "ساندوتش بانل",
+    description: "من أعمال الشركة في تركيب ألواح الساندوتش بانل.",
     location: "الرياض، المملكة العربية السعودية",
-    status: "نموذج - سيتم التحديث",
+  },
+  {
+    id: 4,
+    image: "/projects/construction-01.jpeg",
+    title: "مقاولات إنشائية",
+    description: "من أعمال الشركة في تنفيذ الأعمال الإنشائية والخرسانية.",
+    location: "الرياض، المملكة العربية السعودية",
+  },
+  {
+    id: 5,
+    image: "/projects/construction-02.jpeg",
+    title: "موقع تنفيذ",
+    description: "من مواقع تنفيذ مشاريع الشركة.",
+    location: "الرياض، المملكة العربية السعودية",
+  },
+  {
+    id: 6,
+    image: "/projects/construction-03.jpeg",
+    title: "أعمال الموقع",
+    description: "من سير الأعمال في أحد مواقع تنفيذ الشركة.",
+    location: "الرياض، المملكة العربية السعودية",
   },
 ];
 
@@ -225,33 +243,25 @@ function Header() {
 function Hero() {
   return (
     <section id="home" className="hero">
-      <div className="container hero-grid">
-        <div className="hero-content">
-          <p className="hero-eyebrow">شركة مقاولات عامة — الرياض، المملكة العربية السعودية</p>
-          <h1>شركة أجيال المتطورة للاستثمار</h1>
-          <p className="hero-subtitle">
-            مقاولات معدنية، وأعمال إنشائية، وتشطيبات — تحت مظلة عمل واحدة.
-          </p>
-          <p className="hero-text">
-            شركة مقاولات عامة تعمل في قطاعات الأعمال المعدنية، والمقاولات الإنشائية،
-            وأعمال التشطيب، وتقدم خدماتها في المملكة العربية السعودية.
-          </p>
-          <div className="hero-actions">
-            <a href="/app" className="btn btn-accent">الدخول إلى التطبيق</a>
-            <a href="#contact" className="btn btn-outline-light">تواصل معنا</a>
-          </div>
-          <ul className="hero-sector-tags">
-            <li>الأعمال المعدنية</li>
-            <li>المقاولات الإنشائية</li>
-            <li>أعمال التشطيب</li>
-          </ul>
+      <div className="container hero-content">
+        <p className="hero-eyebrow">شركة مقاولات عامة — الرياض، المملكة العربية السعودية</p>
+        <h1>شركة أجيال المتطورة للاستثمار</h1>
+        <p className="hero-subtitle">
+          مقاولات معدنية، وأعمال إنشائية، وتشطيبات — تحت مظلة عمل واحدة.
+        </p>
+        <p className="hero-text">
+          شركة مقاولات عامة تعمل في قطاعات الأعمال المعدنية، والمقاولات الإنشائية،
+          وأعمال التشطيب، وتقدم خدماتها في المملكة العربية السعودية.
+        </p>
+        <div className="hero-actions">
+          <a href="/app" className="btn btn-accent">الدخول إلى التطبيق</a>
+          <a href="#contact" className="btn btn-outline-light">تواصل معنا</a>
         </div>
-
-        <div className="hero-visual" aria-hidden="true">
-          <div className="hero-visual-frame">
-            <img src="/logo.png" alt="" className="hero-visual-logo" />
-          </div>
-        </div>
+        <ul className="hero-sector-tags">
+          <li>الأعمال المعدنية</li>
+          <li>المقاولات الإنشائية</li>
+          <li>أعمال التشطيب</li>
+        </ul>
       </div>
     </section>
   );
@@ -355,18 +365,16 @@ function Projects() {
           <h2>نماذج بطاقات المشاريع</h2>
         </div>
         <div className="projects-grid">
-          {PROJECT_PLACEHOLDERS.map((project, index) => (
+          {PROJECTS.map((project, index) => (
             <Reveal key={project.id} className="project-card" delay={index * 100}>
-              <div className="project-image-placeholder">
-                <span>صورة المشروع</span>
+              <div className="project-image-frame">
+                <img src={project.image} alt={project.title} className="project-image" loading="lazy" />
               </div>
               <div className="project-body">
-                <span className="project-sector">{project.sector}</span>
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
                 <div className="project-meta">
                   <span>الموقع: {project.location}</span>
-                  <span className="project-status">{project.status}</span>
                 </div>
               </div>
             </Reveal>
