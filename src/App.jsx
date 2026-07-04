@@ -1,4 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+function Reveal({ children, as: Tag = "div", className = "", delay = 0 }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <Tag
+      ref={ref}
+      className={`reveal ${visible ? "reveal-visible" : ""} ${className}`.trim()}
+      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+    >
+      {children}
+    </Tag>
+  );
+}
 
 const NAV_LINKS = [
   { id: "home", label: "الرئيسية", href: "#home" },
@@ -228,7 +261,7 @@ function About() {
   return (
     <section id="about" className="section about">
       <div className="container about-grid">
-        <div className="about-text">
+        <Reveal className="about-text">
           <div className="section-heading section-heading-start">
             <span className="section-label">من نحن</span>
             <h2>شركة أجيال المتطورة للاستثمار</h2>
@@ -244,9 +277,9 @@ function About() {
             وتنتهي بالتسليم والمتابعة، بهدف تنفيذ الأعمال وفق المواصفات
             الفنية المعتمدة.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="about-facts">
+        <Reveal className="about-facts" delay={120}>
           <div className="about-fact">
             <span className="about-fact-label">المقر الرئيسي</span>
             <span className="about-fact-value">الرياض، المملكة العربية السعودية</span>
@@ -259,7 +292,7 @@ function About() {
             <span className="about-fact-label">نطاق العمل</span>
             <span className="about-fact-value">أعمال معدنية، مقاولات إنشائية، تشطيبات</span>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -274,8 +307,8 @@ function Sectors() {
           <h2>مجالات عمل متكاملة</h2>
         </div>
         <div className="sectors-grid">
-          {SECTORS.map((sector) => (
-            <div className="sector-card" key={sector.id}>
+          {SECTORS.map((sector, index) => (
+            <Reveal key={sector.id} className="sector-card" delay={index * 100}>
               <span className="sector-number">{sector.number}</span>
               <h3>{sector.title}</h3>
               <ul>
@@ -283,7 +316,7 @@ function Sectors() {
                   <li key={item}>{item}</li>
                 ))}
               </ul>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -300,12 +333,12 @@ function Methodology() {
           <h2>من الدراسة إلى التسليم</h2>
         </div>
         <div className="methodology-grid">
-          {METHODOLOGY_STEPS.map((step) => (
-            <div className="methodology-card" key={step.number}>
+          {METHODOLOGY_STEPS.map((step, index) => (
+            <Reveal key={step.number} className="methodology-card" delay={(index % 3) * 100}>
               <span className="methodology-number">{step.number}</span>
               <h3>{step.title}</h3>
               <p>{step.description}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -322,8 +355,8 @@ function Projects() {
           <h2>نماذج بطاقات المشاريع</h2>
         </div>
         <div className="projects-grid">
-          {PROJECT_PLACEHOLDERS.map((project) => (
-            <div className="project-card" key={project.id}>
+          {PROJECT_PLACEHOLDERS.map((project, index) => (
+            <Reveal key={project.id} className="project-card" delay={index * 100}>
               <div className="project-image-placeholder">
                 <span>صورة المشروع</span>
               </div>
@@ -336,7 +369,7 @@ function Projects() {
                   <span className="project-status">{project.status}</span>
                 </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -354,11 +387,11 @@ function WhyAjial() {
         </div>
         <div className="why-grid">
           {WHY_AJIAL.map((reason, index) => (
-            <div className="why-card" key={reason.title}>
+            <Reveal key={reason.title} className="why-card" delay={(index % 2) * 100}>
               <span className="why-number">{String(index + 1).padStart(2, "0")}</span>
               <h3>{reason.title}</h3>
               <p>{reason.description}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -374,7 +407,7 @@ function Contact() {
           <span className="section-label">تواصل معنا</span>
           <h2>ابدأ التواصل مع فريقنا</h2>
         </div>
-        <div className="contact-panel">
+        <Reveal className="contact-panel">
           <div className="contact-info">
             <div className="contact-item">
               <span className="contact-label">الهاتف / واتساب</span>
@@ -402,7 +435,7 @@ function Contact() {
               راسلنا عبر البريد الإلكتروني
             </a>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -411,7 +444,7 @@ function Contact() {
 function AppTeaser() {
   return (
     <section id="app" className="section app-teaser">
-      <div className="container app-teaser-inner">
+      <Reveal className="container app-teaser-inner">
         <div className="section-heading section-heading-light">
           <span className="section-label">تطبيق أجيال</span>
           <h2>تطبيق خاص بشركة أجيال المتطورة للاستثمار</h2>
@@ -421,7 +454,7 @@ function AppTeaser() {
           سيتم الإعلان عن تفاصيله لاحقاً.
         </p>
         <a href="/app" className="btn btn-accent">الدخول إلى التطبيق</a>
-      </div>
+      </Reveal>
     </section>
   );
 }
