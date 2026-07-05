@@ -930,10 +930,29 @@ function ServicesCatalog() {
   const [customerPhone, setCustomerPhone] = useState("");
   const [orderNotes, setOrderNotes] = useState("");
   const [customProjectDetails, setCustomProjectDetails] = useState("");
+  const [showCartToast, setShowCartToast] = useState(false);
+  const cartToastTimeoutRef = useRef(null);
+  const cartRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (cartToastTimeoutRef.current) clearTimeout(cartToastTimeoutRef.current);
+    };
+  }, []);
 
   const categoryServices = SERVICES.filter((service) => service.category === activeCategory).sort(
     (a, b) => a.sortOrder - b.sortOrder
   );
+
+  const showAddedToCartToast = () => {
+    setShowCartToast(true);
+    if (cartToastTimeoutRef.current) clearTimeout(cartToastTimeoutRef.current);
+    cartToastTimeoutRef.current = setTimeout(() => setShowCartToast(false), 4000);
+  };
+
+  const scrollToCart = () => {
+    cartRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const addToCart = (item) => {
     setCart((prev) => {
@@ -945,6 +964,7 @@ function ServicesCatalog() {
       updated[existingIndex] = { ...existing, qty, total: existing.unitPrice * qty };
       return updated;
     });
+    showAddedToCartToast();
   };
   const removeFromCart = (mergeKey) =>
     setCart((prev) => prev.filter((item) => item.mergeKey !== mergeKey));
@@ -1075,7 +1095,7 @@ function ServicesCatalog() {
           </div>
         )}
 
-        <div className="cart-panel">
+        <div className="cart-panel" ref={cartRef}>
           <h3>سلة الطلبات</h3>
           {cart.length === 0 ? (
             <p className="cart-empty">لا توجد بنود مضافة بعد.</p>
@@ -1145,6 +1165,13 @@ function ServicesCatalog() {
             </>
           )}
         </div>
+      </div>
+
+      <div className={`cart-toast ${showCartToast ? "show" : ""}`} role="status" aria-live="polite">
+        <span>تمت إضافة الطلب إلى السلة</span>
+        <button type="button" className="cart-toast-button" onClick={scrollToCart}>
+          عرض السلة
+        </button>
       </div>
     </main>
   );
