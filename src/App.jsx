@@ -128,48 +128,41 @@ const WORKSHOP_IMAGES = [
   { id: 6, image: "/projects/steeling-06.jpeg", caption: "خارج الورشة" },
 ];
 
-const PROJECTS = [
+const PROJECT_TEXT = [
   {
-    id: 1,
-    image: "/projects/steel-01.png",
-    title: "أعمال معدنية",
-    description: "من أعمال الشركة في تنفيذ الهياكل والتوصيلات المعدنية.",
+    title: "مشروع أعمال خرسانية",
+    slug: "concrete-works-riyadh",
     location: "الرياض، المملكة العربية السعودية",
+    category: "مقاولات إنشائية",
+    description: "من مشاريع الشركة في تنفيذ الأعمال الإنشائية والخرسانية.",
   },
   {
-    id: 2,
-    image: "/projects/steel-02.png",
-    title: "هناجر ومستودعات",
-    description: "من أعمال الشركة في تنفيذ الهياكل المعدنية للهناجر والمستودعات.",
+    title: "مشروع أعمال تشطيبات",
+    slug: "finishing-riyadh",
     location: "الرياض، المملكة العربية السعودية",
+    category: "أعمال التشطيب",
+    description: "من مشاريع الشركة في تنفيذ أعمال التشطيبات الداخلية والخارجية.",
   },
   {
-    id: 3,
-    image: "/projects/sandwich-panel-01.jpeg",
-    title: "ساندوتش بانل",
-    description: "من أعمال الشركة في تركيب ألواح الساندوتش بانل.",
+    title: "مشروع هناجر ومستودعات",
+    slug: "hanjar-riyadh",
     location: "الرياض، المملكة العربية السعودية",
+    category: "الأعمال المعدنية",
+    description: "من مشاريع الشركة في تنفيذ الهياكل المعدنية للهناجر والمستودعات.",
   },
   {
-    id: 4,
-    image: "/projects/construction-01.jpeg",
-    title: "مقاولات إنشائية",
-    description: "من أعمال الشركة في تنفيذ الأعمال الإنشائية والخرسانية.",
+    title: "مشروع ساندوتش بانل",
+    slug: "sandwich-panel-riyadh",
     location: "الرياض، المملكة العربية السعودية",
+    category: "الأعمال المعدنية",
+    description: "من مشاريع الشركة في تركيب ألواح الساندوتش بانل.",
   },
   {
-    id: 5,
-    image: "/projects/construction-02.jpeg",
-    title: "موقع تنفيذ",
-    description: "من مواقع تنفيذ مشاريع الشركة.",
+    title: "مشروع أعمال خشبية",
+    slug: "Woodwork",
     location: "الرياض، المملكة العربية السعودية",
-  },
-  {
-    id: 6,
-    image: "/projects/construction-03.jpeg",
-    title: "أعمال الموقع",
-    description: "من سير الأعمال في أحد مواقع تنفيذ الشركة.",
-    location: "الرياض، المملكة العربية السعودية",
+    category: "أعمال التشطيب",
+    description: "من مشاريع الشركة في تنفيذ الأعمال الخشبية والتكميلية.",
   },
 ];
 
@@ -192,10 +185,13 @@ const WHY_AJIAL = [
   },
 ];
 
-function Header() {
+function Header({ onNavigate }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleNavClick = () => setMenuOpen(false);
+  const handleNavClick = () => {
+    setMenuOpen(false);
+    if (onNavigate) onNavigate();
+  };
 
   return (
     <header className="site-header">
@@ -391,32 +387,83 @@ function Methodology() {
   );
 }
 
-function Projects() {
+function Projects({ manifest, onSelectProject }) {
+  const projects = manifest.map((entry) => {
+    const text = PROJECT_TEXT.find((item) => item.slug === entry.slug) || {};
+    return {
+      slug: entry.slug,
+      coverImage: entry.coverImage,
+      title: text.title || entry.slug,
+      category: text.category || "",
+      description: text.description || "",
+      location: text.location || "الرياض، المملكة العربية السعودية",
+    };
+  });
+
   return (
     <section id="projects" className="section projects">
       <div className="container">
         <div className="section-heading">
           <span className="section-label">معرض المشاريع</span>
-          <h2>نماذج بطاقات المشاريع</h2>
+          <h2>مشاريع الشركة</h2>
         </div>
         <div className="projects-grid">
-          {PROJECTS.map((project, index) => (
-            <Reveal key={project.id} className="project-card" delay={index * 100}>
-              <div className="project-image-frame">
-                <img src={project.image} alt={project.title} className="project-image" loading="lazy" />
-              </div>
-              <div className="project-body">
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <div className="project-meta">
-                  <span>الموقع: {project.location}</span>
+          {projects.map((project, index) => (
+            <Reveal key={project.slug} className="project-card" delay={index * 100}>
+              <button
+                type="button"
+                className="project-card-trigger"
+                onClick={() => onSelectProject(project.slug)}
+              >
+                <div className="project-image-frame">
+                  <img src={project.coverImage} alt={project.title} className="project-image" loading="lazy" />
                 </div>
-              </div>
+                <div className="project-body">
+                  {project.category && <span className="project-category">{project.category}</span>}
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  <div className="project-meta">
+                    <span>الموقع: {project.location}</span>
+                  </div>
+                </div>
+              </button>
             </Reveal>
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function ProjectDetails({ project, onBack }) {
+  const text = PROJECT_TEXT.find((item) => item.slug === project.slug) || {};
+
+  return (
+    <main className="section project-details">
+      <div className="container">
+        <button type="button" className="project-back-link" onClick={onBack}>
+          العودة إلى معرض المشاريع
+        </button>
+        <div className="section-heading section-heading-start">
+          {text.category && <span className="section-label">{text.category}</span>}
+          <h2>{text.title || project.slug}</h2>
+        </div>
+        {text.description && <p className="project-details-description">{text.description}</p>}
+        {text.location && <p className="project-details-location">الموقع: {text.location}</p>}
+        <div className="project-details-grid">
+          {project.images.map((src, index) => (
+            <div className="project-details-image-frame" key={src}>
+              <img
+                src={src}
+                alt={`${text.title || project.slug} ${index + 1}`}
+                className="project-details-image"
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </main>
   );
 }
 
@@ -565,20 +612,63 @@ function Footer() {
 }
 
 export default function App() {
+  const [manifest, setManifest] = useState([]);
+  const [activeSlug, setActiveSlug] = useState(
+    () => new URLSearchParams(window.location.search).get("project")
+  );
+
+  useEffect(() => {
+    fetch("/projects/manifest.json")
+      .then((res) => res.json())
+      .then(setManifest)
+      .catch(() => setManifest([]));
+  }, []);
+
+  useEffect(() => {
+    const onPopState = () => {
+      setActiveSlug(new URLSearchParams(window.location.search).get("project"));
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  const openProject = (slug) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("project", slug);
+    window.history.pushState({}, "", url);
+    setActiveSlug(slug);
+    window.scrollTo(0, 0);
+  };
+
+  const closeProject = () => {
+    if (!activeSlug) return;
+    const url = new URL(window.location.href);
+    url.searchParams.delete("project");
+    window.history.pushState({}, "", url);
+    setActiveSlug(null);
+    window.scrollTo(0, 0);
+  };
+
+  const activeProject = activeSlug ? manifest.find((item) => item.slug === activeSlug) : null;
+
   return (
     <>
-      <Header />
-      <main>
-        <Hero />
-        <About />
-        <Sectors />
-        <Workshop />
-        <Methodology />
-        <Projects />
-        <WhyAjial />
-        <Contact />
-        <AppTeaser />
-      </main>
+      <Header onNavigate={closeProject} />
+      {activeProject ? (
+        <ProjectDetails project={activeProject} onBack={closeProject} />
+      ) : (
+        <main>
+          <Hero />
+          <About />
+          <Sectors />
+          <Workshop />
+          <Methodology />
+          <Projects manifest={manifest} onSelectProject={openProject} />
+          <WhyAjial />
+          <Contact />
+          <AppTeaser />
+        </main>
+      )}
       <Footer />
     </>
   );

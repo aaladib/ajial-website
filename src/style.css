@@ -653,6 +653,30 @@ p {
   box-shadow: var(--shadow-lg), var(--shadow-gold);
 }
 
+.project-card-trigger {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: right;
+  cursor: pointer;
+}
+
+.project-category {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  background-color: var(--color-gray);
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
 .project-image-frame {
   height: 190px;
   overflow: hidden;
@@ -694,6 +718,58 @@ p {
   color: var(--color-steel-light);
   border-top: 1px solid var(--color-gray-border);
   padding-top: 14px;
+}
+
+/* Project details page */
+.project-back-link {
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 32px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-navy);
+  cursor: pointer;
+}
+
+.project-back-link:hover {
+  text-decoration: underline;
+}
+
+.project-details-description {
+  color: var(--color-text-muted);
+  font-size: 1.02rem;
+  max-width: 720px;
+  margin-bottom: 12px;
+}
+
+.project-details-location {
+  color: var(--color-steel-light);
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.project-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.project-details-image-frame {
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: var(--shadow);
+}
+
+.project-details-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* Why Ajial */
@@ -943,7 +1019,8 @@ p {
   .sectors-grid,
   .methodology-grid,
   .projects-grid,
-  .workshop-grid {
+  .workshop-grid,
+  .project-details-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
