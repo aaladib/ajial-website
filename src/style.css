@@ -208,8 +208,10 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 14px;
   gap: 24px;
-  max-width: 1400px;
+  max-width: 1600px;
   padding-top: 16px;
   padding-bottom: 16px;
 }
@@ -249,7 +251,9 @@ section[id] {
 .main-nav ul {
   display: flex;
   align-items: center;
-  gap: 22px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
 }
 
 .main-nav li {
@@ -258,7 +262,7 @@ section[id] {
 
 .main-nav a {
   font-weight: 600;
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   color: var(--color-steel);
   padding: 8px 0;
   border-bottom: 2px solid transparent;
@@ -1347,7 +1351,23 @@ section[id] {
 }
 
 /* Responsive */
-@media (max-width: 1400px) {
+
+/* Compact desktop/tablet: keep every link visible (no hamburger), wrap the
+   nav onto its own full-width row below the logo so nothing overlaps it. */
+@media (min-width: 901px) and (max-width: 1400px) {
+  .main-nav {
+    width: 100%;
+    order: 3;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-gray-border);
+  }
+
+  .main-nav ul {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
   .menu-toggle {
     display: flex;
   }
