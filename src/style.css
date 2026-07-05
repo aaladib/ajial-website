@@ -104,6 +104,12 @@ p {
   border: 2px solid transparent;
 }
 
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .btn-primary {
   background-color: var(--color-navy);
   color: var(--color-white);
@@ -1081,11 +1087,13 @@ p {
   font-weight: 700;
   color: var(--color-navy);
   font-size: 1.05rem;
+  white-space: nowrap;
 }
 
 .service-min {
   font-size: 0.78rem;
   color: var(--color-steel-light);
+  white-space: nowrap;
 }
 
 .service-qty-label {
@@ -1095,6 +1103,14 @@ p {
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--color-steel-light);
+}
+
+.service-qty-caption {
+  white-space: nowrap;
+}
+
+.unit-nowrap {
+  white-space: nowrap;
 }
 
 .service-qty-input,
@@ -1239,6 +1255,7 @@ p {
 .cart-item-detail {
   font-size: 0.8rem;
   color: var(--color-steel-light);
+  white-space: nowrap;
 }
 
 .cart-item-total {
@@ -1276,6 +1293,12 @@ p {
 .cart-submit-btn {
   align-self: stretch;
   text-align: center;
+}
+
+.cart-form-hint {
+  font-size: 0.8rem;
+  color: var(--color-steel-light);
+  margin-top: -6px;
 }
 
 /* Responsive */

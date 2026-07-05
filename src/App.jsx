@@ -52,6 +52,12 @@ function buildWhatsAppLink(message) {
   return `https://wa.me/${AJIAL_WHATSAPP}?text=${encodeURIComponent(message)}`;
 }
 
+function formatUnit(unit) {
+  if (unit === "م²") return <span className="unit-nowrap">م<sup>2</sup></span>;
+  if (unit === "م³") return <span className="unit-nowrap">م<sup>3</sup></span>;
+  return unit;
+}
+
 const SERVICE_CATEGORIES = [
   { id: "metal", label: "الأعمال المعدنية والهياكل" },
   { id: "finishing", label: "أعمال التشطيب" },
@@ -814,18 +820,20 @@ function ServiceCard({ service, onAddToCart, onRequestQuote }) {
   const handleAdd = () => {
     if (service.pricingType === "direct") {
       onAddToCart({
-        key: `${service.id}-${Date.now()}`,
+        mergeKey: service.id,
         name: service.name,
-        detail: `${effectiveQty} ${service.unit}`,
-        qtyLabel: `${effectiveQty} ${service.unit}`,
+        qty: effectiveQty,
+        unit: service.unit,
+        unitPrice: service.price,
         total: directTotal,
       });
     } else if (service.pricingType === "fixed" && selectedOption) {
       onAddToCart({
-        key: `${service.id}-${selectedOption.id}-${Date.now()}`,
+        mergeKey: `${service.id}:${selectedOption.id}`,
         name: `${service.name} - ${selectedOption.label}`,
-        detail: `${optionQty} × ${selectedOption.label}`,
-        qtyLabel: `${optionQty} ${service.unit}`,
+        qty: optionQty,
+        unit: service.unit,
+        unitPrice: selectedOption.price,
         total: fixedTotal,
       });
     }
@@ -853,16 +861,16 @@ function ServiceCard({ service, onAddToCart, onRequestQuote }) {
         <div className="service-calc">
           <div className="service-price-row">
             <span className="service-price">
-              {service.price.toLocaleString()} ريال / {service.unit}
+              {service.price.toLocaleString()} ريال / {formatUnit(service.unit)}
             </span>
             {service.minQty && (
               <span className="service-min">
-                الحد الأدنى {service.minQty} {service.unit}
+                الحد الأدنى {service.minQty} {formatUnit(service.unit)}
               </span>
             )}
           </div>
           <label className="service-qty-label">
-            الكمية ({service.unit})
+            <span className="service-qty-caption">الكمية ({formatUnit(service.unit)})</span>
             <input
               type="number"
               min={service.minQty || 1}
@@ -927,9 +935,21 @@ function ServicesCatalog() {
     (a, b) => a.sortOrder - b.sortOrder
   );
 
-  const addToCart = (item) => setCart((prev) => [...prev, item]);
-  const removeFromCart = (key) => setCart((prev) => prev.filter((item) => item.key !== key));
+  const addToCart = (item) => {
+    setCart((prev) => {
+      const existingIndex = prev.findIndex((line) => line.mergeKey === item.mergeKey);
+      if (existingIndex === -1) return [...prev, item];
+      const updated = [...prev];
+      const existing = updated[existingIndex];
+      const qty = existing.qty + item.qty;
+      updated[existingIndex] = { ...existing, qty, total: existing.unitPrice * qty };
+      return updated;
+    });
+  };
+  const removeFromCart = (mergeKey) =>
+    setCart((prev) => prev.filter((item) => item.mergeKey !== mergeKey));
   const cartTotal = cart.reduce((sum, item) => sum + item.total, 0);
+  const canSubmitCart = customerName.trim() !== "" && customerPhone.trim() !== "";
 
   const requestServiceQuote = (service) => {
     const message = [
@@ -941,10 +961,11 @@ function ServicesCatalog() {
   };
 
   const sendCartOrder = () => {
+    if (!canSubmitCart) return;
     const servicesList = cart
-      .map((item) => `- ${item.name} (${item.detail}) - ${item.total.toLocaleString()} ريال`)
+      .map((item) => `- ${item.name} (${item.qty} ${item.unit}) - ${item.total.toLocaleString()} ريال`)
       .join("\n");
-    const quantitiesList = cart.map((item) => `${item.name}: ${item.qtyLabel}`).join("، ");
+    const quantitiesList = cart.map((item) => `${item.name}: ${item.qty} ${item.unit}`).join("، ");
     const message = [
       `اسم العميل: ${customerName || "-"}`,
       `رقم الجوال: ${customerPhone || "-"}`,
@@ -1062,16 +1083,18 @@ function ServicesCatalog() {
             <>
               <div className="cart-items">
                 {cart.map((item) => (
-                  <div className="cart-item" key={item.key}>
+                  <div className="cart-item" key={item.mergeKey}>
                     <div className="cart-item-info">
                       <span className="cart-item-name">{item.name}</span>
-                      <span className="cart-item-detail">{item.detail}</span>
+                      <span className="cart-item-detail">
+                        {item.qty} {formatUnit(item.unit)}
+                      </span>
                     </div>
                     <span className="cart-item-total">{item.total.toLocaleString()} ريال</span>
                     <button
                       type="button"
                       className="cart-item-remove"
-                      onClick={() => removeFromCart(item.key)}
+                      onClick={() => removeFromCart(item.mergeKey)}
                       aria-label="إزالة البند"
                     >
                       ×
@@ -1110,7 +1133,13 @@ function ServicesCatalog() {
                   rows={3}
                 />
               </label>
-              <button type="button" className="btn btn-accent cart-submit-btn" onClick={sendCartOrder}>
+              <p className="cart-form-hint">الاسم ورقم الجوال مطلوبان لإرسال الطلب.</p>
+              <button
+                type="button"
+                className="btn btn-accent cart-submit-btn"
+                onClick={sendCartOrder}
+                disabled={!canSubmitCart}
+              >
                 إرسال الطلب عبر واتساب
               </button>
             </>
