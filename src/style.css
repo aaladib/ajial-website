@@ -203,7 +203,8 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1320px;
+  gap: 24px;
+  max-width: 1400px;
   padding-top: 16px;
   padding-bottom: 16px;
 }
@@ -243,7 +244,7 @@ p {
 .main-nav ul {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 22px;
 }
 
 .main-nav li {
@@ -1341,7 +1342,7 @@ p {
 }
 
 /* Responsive */
-@media (max-width: 1220px) {
+@media (max-width: 1400px) {
   .menu-toggle {
     display: flex;
   }
