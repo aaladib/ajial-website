@@ -515,6 +515,21 @@ const WHY_AJIAL = [
 
 function Header({ onNavigate, onOpenServices }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return undefined;
+
+    const updateHeaderHeight = () => {
+      document.documentElement.style.setProperty("--header-h", `${el.offsetHeight}px`);
+    };
+
+    updateHeaderHeight();
+    const observer = new ResizeObserver(updateHeaderHeight);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const handleBrandClick = () => {
     setMenuOpen(false);
@@ -532,7 +547,7 @@ function Header({ onNavigate, onOpenServices }) {
   };
 
   return (
-    <header className="site-header">
+    <header className="site-header" ref={headerRef}>
       <div className="top-bar">
         <div className="container top-bar-inner">
           <div className="top-bar-info">

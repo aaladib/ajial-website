@@ -16,6 +16,7 @@
   --shadow: 0 12px 30px rgba(11, 37, 69, 0.1);
   --shadow-lg: 0 20px 48px rgba(11, 37, 69, 0.16);
   --shadow-gold: 0 14px 32px rgba(184, 144, 47, 0.35);
+  --header-h: 140px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -197,6 +198,10 @@ p {
   box-shadow: 0 2px 12px rgba(11, 37, 69, 0.04);
   transform: translateZ(0);
   backface-visibility: hidden;
+}
+
+section[id] {
+  scroll-margin-top: var(--header-h);
 }
 
 .header-inner {
