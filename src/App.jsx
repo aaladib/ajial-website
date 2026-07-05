@@ -40,9 +40,331 @@ const NAV_LINKS = [
   { id: "workshop", label: "ورشة الحديد", href: "#workshop" },
   { id: "methodology", label: "منهجية العمل", href: "#methodology" },
   { id: "projects", label: "معرض المشاريع", href: "#projects" },
+  { id: "services", label: "خدمات أجيال المسعّرة", href: "#services", action: "services" },
   { id: "why", label: "لماذا أجيال", href: "#why" },
   { id: "contact", label: "تواصل معنا", href: "#contact" },
   { id: "app", label: "تطبيق أجيال", href: "/app", cta: true },
+];
+
+const AJIAL_WHATSAPP = "966555095652";
+
+function buildWhatsAppLink(message) {
+  return `https://wa.me/${AJIAL_WHATSAPP}?text=${encodeURIComponent(message)}`;
+}
+
+const SERVICE_CATEGORIES = [
+  { id: "metal", label: "الأعمال المعدنية والهياكل" },
+  { id: "finishing", label: "أعمال التشطيب" },
+  { id: "shell", label: "أعمال العظم" },
+  { id: "custom", label: "طلب عرض مشروع خاص" },
+];
+
+/**
+ * أسعار مبدئية قابلة للتعديل من هنا فقط.
+ * كل الأسعار تقديرية وتخضع لمراجعة أجيال قبل الاعتماد (موضح للعميل بالواجهة).
+ */
+const SERVICES = [
+  // الأعمال المعدنية والهياكل
+  {
+    id: "metal-sandwich-room",
+    category: "metal",
+    name: "غرف سندوتش بانل",
+    description: "غرف جاهزة بألواح الساندوتش بانل بمقاسات ثابتة.",
+    pricingType: "fixed",
+    price: null,
+    unit: "غرفة",
+    minQty: null,
+    fixedOptions: [
+      { id: "3x3", label: "غرفة 3×3 م", price: 9000 },
+      { id: "3x6", label: "غرفة 3×6 م", price: 16000 },
+      { id: "6x6", label: "غرفة 6×6 م", price: 28000 },
+    ],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 1,
+  },
+  {
+    id: "metal-sandwich-panel",
+    category: "metal",
+    name: "ألواح سندوتش بانل",
+    description: "توريد وتركيب ألواح الساندوتش بانل للأسقف والجدران.",
+    pricingType: "direct",
+    price: 250,
+    unit: "م²",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 2,
+  },
+  {
+    id: "metal-fence",
+    category: "metal",
+    name: "أسوار حديد",
+    description: "تصنيع وتركيب أسوار حديد بارتفاعات وتصاميم مختلفة.",
+    pricingType: "direct",
+    price: 220,
+    unit: "م.ط",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 3,
+  },
+  {
+    id: "metal-gate",
+    category: "metal",
+    name: "بوابات حديد",
+    description: "بوابات حديد جاهزة بمقاسات قياسية للمركبات والمشاة.",
+    pricingType: "fixed",
+    price: null,
+    unit: "بوابة",
+    minQty: null,
+    fixedOptions: [
+      { id: "pedestrian", label: "بوابة مشاة", price: 1200 },
+      { id: "single-car", label: "بوابة سيارة مفردة", price: 2800 },
+      { id: "double-car", label: "بوابة سيارتين", price: 4500 },
+    ],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 4,
+  },
+  {
+    id: "metal-handrail",
+    category: "metal",
+    name: "درابزين",
+    description: "تصنيع وتركيب درابزين حديد للسلالم والمنصات.",
+    pricingType: "direct",
+    price: 180,
+    unit: "م.ط",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 5,
+  },
+  {
+    id: "metal-hangar",
+    category: "metal",
+    name: "هناجر ومستودعات",
+    description: "تصميم وتنفيذ هناجر ومستودعات معدنية حسب متطلبات المشروع.",
+    pricingType: "quote",
+    price: null,
+    unit: null,
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 6,
+  },
+  {
+    id: "metal-canopy",
+    category: "metal",
+    name: "مظلات مواقف",
+    description: "تركيب مظلات مواقف سيارات بهياكل معدنية.",
+    pricingType: "direct",
+    price: 550,
+    unit: "م²",
+    minQty: 9,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 7,
+  },
+
+  // أعمال التشطيب
+  {
+    id: "finishing-gypsum",
+    category: "finishing",
+    name: "جبس بورد",
+    description: "تنفيذ أسقف وقواطع الجبس بورد.",
+    pricingType: "direct",
+    price: 45,
+    unit: "م²",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 1,
+  },
+  {
+    id: "finishing-paint-interior",
+    category: "finishing",
+    name: "دهان داخلي",
+    description: "أعمال دهان الجدران والأسقف الداخلية.",
+    pricingType: "direct",
+    price: 18,
+    unit: "م²",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 2,
+  },
+  {
+    id: "finishing-paint-exterior",
+    category: "finishing",
+    name: "دهان خارجي",
+    description: "أعمال دهان الواجهات والأسطح الخارجية.",
+    pricingType: "direct",
+    price: 25,
+    unit: "م²",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 3,
+  },
+  {
+    id: "finishing-plastering",
+    category: "finishing",
+    name: "لياسة",
+    description: "أعمال لياسة الجدران والأسقف.",
+    pricingType: "direct",
+    price: 30,
+    unit: "م²",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 4,
+  },
+  {
+    id: "finishing-flooring",
+    category: "finishing",
+    name: "أرضيات",
+    description: "توريد وتركيب أرضيات بأنواعها.",
+    pricingType: "direct",
+    price: 60,
+    unit: "م²",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 5,
+  },
+  {
+    id: "finishing-epoxy",
+    category: "finishing",
+    name: "إيبوكسي",
+    description: "تنفيذ أرضيات الإيبوكسي.",
+    pricingType: "direct",
+    price: 45,
+    unit: "م²",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 6,
+  },
+
+  // أعمال العظم
+  {
+    id: "shell-concrete",
+    category: "shell",
+    name: "خرسانة",
+    description: "أعمال الخرسانة المسلحة للمشروع.",
+    pricingType: "direct",
+    price: 280,
+    unit: "م³",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 1,
+  },
+  {
+    id: "shell-ground-slab",
+    category: "shell",
+    name: "صبة أرضية",
+    description: "تنفيذ الصبة الأرضية للمشروع.",
+    pricingType: "direct",
+    price: 35,
+    unit: "م²",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 2,
+  },
+  {
+    id: "shell-block",
+    category: "shell",
+    name: "بلوك",
+    description: "أعمال البناء بالبلوك.",
+    pricingType: "direct",
+    price: 40,
+    unit: "م²",
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 3,
+  },
+  {
+    id: "shell-foundations",
+    category: "shell",
+    name: "قواعد",
+    description: "تنفيذ قواعد الأساسات الخرسانية حسب التصميم الإنشائي.",
+    pricingType: "quote",
+    price: null,
+    unit: null,
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 4,
+  },
+  {
+    id: "shell-annex",
+    category: "shell",
+    name: "ملاحق",
+    description: "تنفيذ ملاحق ومباني إضافية حسب متطلبات المشروع.",
+    pricingType: "quote",
+    price: null,
+    unit: null,
+    minQty: null,
+    fixedOptions: [],
+    includes: [],
+    excludes: [],
+    duration: null,
+    requiresReview: true,
+    sortOrder: 5,
+  },
 ];
 
 const SECTORS = [
@@ -185,12 +507,22 @@ const WHY_AJIAL = [
   },
 ];
 
-function Header({ onNavigate }) {
+function Header({ onNavigate, onOpenServices }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleNavClick = () => {
+  const handleBrandClick = () => {
     setMenuOpen(false);
     if (onNavigate) onNavigate();
+  };
+
+  const handleLinkClick = (link) => (event) => {
+    setMenuOpen(false);
+    if (link.action === "services") {
+      event.preventDefault();
+      if (onOpenServices) onOpenServices();
+    } else if (!link.cta && onNavigate) {
+      onNavigate();
+    }
   };
 
   return (
@@ -207,7 +539,7 @@ function Header({ onNavigate }) {
       </div>
 
       <div className="container header-inner">
-        <a href="#home" className="brand" onClick={handleNavClick}>
+        <a href="#home" className="brand" onClick={handleBrandClick}>
           <img src="/logo.png" alt="شعار أجيال المتطورة للاستثمار" className="brand-logo" />
           <span className="brand-text">
             <span className="brand-name">أجيال المتطورة للاستثمار</span>
@@ -232,7 +564,7 @@ function Header({ onNavigate }) {
               <li key={link.id}>
                 <a
                   href={link.href}
-                  onClick={handleNavClick}
+                  onClick={handleLinkClick(link)}
                   className={link.cta ? "nav-cta-link" : undefined}
                 >
                   {link.label}
@@ -467,6 +799,328 @@ function ProjectDetails({ project, onBack }) {
   );
 }
 
+function ServiceCard({ service, onAddToCart, onRequestQuote }) {
+  const [qty, setQty] = useState(service.minQty || 1);
+  const [selectedOptionId, setSelectedOptionId] = useState(
+    service.fixedOptions && service.fixedOptions.length > 0 ? service.fixedOptions[0].id : null
+  );
+  const [optionQty, setOptionQty] = useState(1);
+
+  const selectedOption = service.fixedOptions?.find((option) => option.id === selectedOptionId);
+  const effectiveQty = service.minQty ? Math.max(qty, service.minQty) : qty;
+  const directTotal = service.pricingType === "direct" ? service.price * effectiveQty : 0;
+  const fixedTotal = service.pricingType === "fixed" && selectedOption ? selectedOption.price * optionQty : 0;
+
+  const handleAdd = () => {
+    if (service.pricingType === "direct") {
+      onAddToCart({
+        key: `${service.id}-${Date.now()}`,
+        name: service.name,
+        detail: `${effectiveQty} ${service.unit}`,
+        qtyLabel: `${effectiveQty} ${service.unit}`,
+        total: directTotal,
+      });
+    } else if (service.pricingType === "fixed" && selectedOption) {
+      onAddToCart({
+        key: `${service.id}-${selectedOption.id}-${Date.now()}`,
+        name: `${service.name} - ${selectedOption.label}`,
+        detail: `${optionQty} × ${selectedOption.label}`,
+        qtyLabel: `${optionQty} ${service.unit}`,
+        total: fixedTotal,
+      });
+    }
+  };
+
+  return (
+    <div className="service-card">
+      <h3>{service.name}</h3>
+      {service.description && <p className="service-description">{service.description}</p>}
+
+      {service.pricingType === "quote" && (
+        <div className="service-calc">
+          <span className="service-quote-badge">يحتاج عرض سعر</span>
+          <button
+            type="button"
+            className="btn btn-outline service-action-btn"
+            onClick={() => onRequestQuote(service)}
+          >
+            اطلب عرض سعر عبر واتساب
+          </button>
+        </div>
+      )}
+
+      {service.pricingType === "direct" && (
+        <div className="service-calc">
+          <div className="service-price-row">
+            <span className="service-price">
+              {service.price.toLocaleString()} ريال / {service.unit}
+            </span>
+            {service.minQty && (
+              <span className="service-min">
+                الحد الأدنى {service.minQty} {service.unit}
+              </span>
+            )}
+          </div>
+          <label className="service-qty-label">
+            الكمية ({service.unit})
+            <input
+              type="number"
+              min={service.minQty || 1}
+              step="0.5"
+              value={qty}
+              onChange={(event) => setQty(Number(event.target.value) || 0)}
+              className="service-qty-input"
+            />
+          </label>
+          <div className="service-total">الإجمالي: {directTotal.toLocaleString()} ريال</div>
+          <button type="button" className="btn btn-primary service-action-btn" onClick={handleAdd}>
+            أضف للسلة
+          </button>
+        </div>
+      )}
+
+      {service.pricingType === "fixed" && (
+        <div className="service-calc">
+          <div className="service-options">
+            {service.fixedOptions.map((option) => (
+              <label key={option.id} className="service-option">
+                <input
+                  type="radio"
+                  name={`${service.id}-option`}
+                  checked={selectedOptionId === option.id}
+                  onChange={() => setSelectedOptionId(option.id)}
+                />
+                <span className="service-option-label">{option.label}</span>
+                <span className="service-option-price">{option.price.toLocaleString()} ريال</span>
+              </label>
+            ))}
+          </div>
+          <label className="service-qty-label">
+            الكمية
+            <input
+              type="number"
+              min="1"
+              value={optionQty}
+              onChange={(event) => setOptionQty(Number(event.target.value) || 1)}
+              className="service-qty-input"
+            />
+          </label>
+          <div className="service-total">الإجمالي: {fixedTotal.toLocaleString()} ريال</div>
+          <button type="button" className="btn btn-primary service-action-btn" onClick={handleAdd}>
+            أضف للسلة
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ServicesCatalog() {
+  const [activeCategory, setActiveCategory] = useState("metal");
+  const [cart, setCart] = useState([]);
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [orderNotes, setOrderNotes] = useState("");
+  const [customProjectDetails, setCustomProjectDetails] = useState("");
+
+  const categoryServices = SERVICES.filter((service) => service.category === activeCategory).sort(
+    (a, b) => a.sortOrder - b.sortOrder
+  );
+
+  const addToCart = (item) => setCart((prev) => [...prev, item]);
+  const removeFromCart = (key) => setCart((prev) => prev.filter((item) => item.key !== key));
+  const cartTotal = cart.reduce((sum, item) => sum + item.total, 0);
+
+  const requestServiceQuote = (service) => {
+    const message = [
+      "مرحباً، أرغب بطلب عرض سعر للخدمة التالية:",
+      `الخدمة: ${service.name}`,
+      `رابط الصفحة: ${window.location.href}`,
+    ].join("\n");
+    window.open(buildWhatsAppLink(message), "_blank", "noopener,noreferrer");
+  };
+
+  const sendCartOrder = () => {
+    const servicesList = cart
+      .map((item) => `- ${item.name} (${item.detail}) - ${item.total.toLocaleString()} ريال`)
+      .join("\n");
+    const quantitiesList = cart.map((item) => `${item.name}: ${item.qtyLabel}`).join("، ");
+    const message = [
+      `اسم العميل: ${customerName || "-"}`,
+      `رقم الجوال: ${customerPhone || "-"}`,
+      "الخدمات المطلوبة:",
+      servicesList,
+      `الكميات: ${quantitiesList}`,
+      `الإجمالي التقريبي: ${cartTotal.toLocaleString()} ريال (تقديري ويخضع لمراجعة أجيال)`,
+      `ملاحظات: ${orderNotes || "-"}`,
+      `رابط الصفحة: ${window.location.href}`,
+    ].join("\n");
+    window.open(buildWhatsAppLink(message), "_blank", "noopener,noreferrer");
+  };
+
+  const sendCustomProjectRequest = () => {
+    const message = [
+      "مرحباً، أرغب بطلب عرض سعر لمشروع خاص.",
+      `اسم العميل: ${customerName || "-"}`,
+      `رقم الجوال: ${customerPhone || "-"}`,
+      `تفاصيل المشروع: ${customProjectDetails || "-"}`,
+      `رابط الصفحة: ${window.location.href}`,
+    ].join("\n");
+    window.open(buildWhatsAppLink(message), "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <main className="section services-page">
+      <div className="container">
+        <div className="section-heading">
+          <span className="section-label">خدمات أجيال المسعّرة</span>
+          <h2>كتالوج خدمات المقاولات</h2>
+        </div>
+
+        <p className="services-intro">
+          شركة أجيال المتطورة للاستثمار شركة مقاولات عامة تعمل في الأعمال المعدنية،
+          وأعمال العظم، وأعمال التشطيب. الأسعار أدناه مبدئية لتسهيل التواصل، ويمكن
+          طلب عرض سعر مباشر عبر واتساب لأي خدمة.
+        </p>
+
+        <div className="services-notice">
+          <p>الأسعار تقديرية/مبدئية وتخضع لمراجعة أجيال قبل الاعتماد.</p>
+          <p>الأسعار داخل الرياض فقط ما لم يُذكر غير ذلك.</p>
+          <p>الأسعار لا تشمل الأعمال الإضافية غير المذكورة في الوصف.</p>
+          <p>لا يوجد دفع إلكتروني حالياً، سيتم تأكيد الطلب عبر فريق أجيال.</p>
+        </div>
+
+        <div className="services-tabs">
+          {SERVICE_CATEGORIES.map((category) => (
+            <button
+              key={category.id}
+              type="button"
+              className={`services-tab-btn ${activeCategory === category.id ? "active" : ""}`}
+              onClick={() => setActiveCategory(category.id)}
+            >
+              {category.label}
+            </button>
+          ))}
+        </div>
+
+        {activeCategory === "custom" ? (
+          <div className="custom-project-panel">
+            <h3>طلب عرض مشروع خاص</h3>
+            <p>
+              إذا كان مشروعك لا يندرج ضمن الخدمات المذكورة، أرسل تفاصيله وسيتواصل
+              معك فريق أجيال لتقديم عرض سعر مناسب.
+            </p>
+            <label className="services-form-label">
+              اسم العميل
+              <input
+                type="text"
+                value={customerName}
+                onChange={(event) => setCustomerName(event.target.value)}
+                className="services-form-input"
+              />
+            </label>
+            <label className="services-form-label">
+              رقم الجوال
+              <input
+                type="tel"
+                value={customerPhone}
+                onChange={(event) => setCustomerPhone(event.target.value)}
+                className="services-form-input"
+              />
+            </label>
+            <label className="services-form-label">
+              تفاصيل المشروع
+              <textarea
+                value={customProjectDetails}
+                onChange={(event) => setCustomProjectDetails(event.target.value)}
+                className="services-form-textarea"
+                rows={4}
+              />
+            </label>
+            <button type="button" className="btn btn-primary" onClick={sendCustomProjectRequest}>
+              إرسال الطلب عبر واتساب
+            </button>
+          </div>
+        ) : (
+          <div className="services-grid">
+            {categoryServices.map((service) => (
+              <ServiceCard
+                key={service.id}
+                service={service}
+                onAddToCart={addToCart}
+                onRequestQuote={requestServiceQuote}
+              />
+            ))}
+          </div>
+        )}
+
+        <div className="cart-panel">
+          <h3>سلة الطلبات</h3>
+          {cart.length === 0 ? (
+            <p className="cart-empty">لا توجد بنود مضافة بعد.</p>
+          ) : (
+            <>
+              <div className="cart-items">
+                {cart.map((item) => (
+                  <div className="cart-item" key={item.key}>
+                    <div className="cart-item-info">
+                      <span className="cart-item-name">{item.name}</span>
+                      <span className="cart-item-detail">{item.detail}</span>
+                    </div>
+                    <span className="cart-item-total">{item.total.toLocaleString()} ريال</span>
+                    <button
+                      type="button"
+                      className="cart-item-remove"
+                      onClick={() => removeFromCart(item.key)}
+                      aria-label="إزالة البند"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className="cart-total-row">
+                <span>الإجمالي التقريبي</span>
+                <span>{cartTotal.toLocaleString()} ريال</span>
+              </div>
+              <label className="services-form-label">
+                اسم العميل
+                <input
+                  type="text"
+                  value={customerName}
+                  onChange={(event) => setCustomerName(event.target.value)}
+                  className="services-form-input"
+                />
+              </label>
+              <label className="services-form-label">
+                رقم الجوال
+                <input
+                  type="tel"
+                  value={customerPhone}
+                  onChange={(event) => setCustomerPhone(event.target.value)}
+                  className="services-form-input"
+                />
+              </label>
+              <label className="services-form-label">
+                ملاحظات
+                <textarea
+                  value={orderNotes}
+                  onChange={(event) => setOrderNotes(event.target.value)}
+                  className="services-form-textarea"
+                  rows={3}
+                />
+              </label>
+              <button type="button" className="btn btn-accent cart-submit-btn" onClick={sendCartOrder}>
+                إرسال الطلب عبر واتساب
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </main>
+  );
+}
+
 function WhyAjial() {
   return (
     <section id="why" className="section why-ajial">
@@ -549,8 +1203,17 @@ function AppTeaser() {
   );
 }
 
-function Footer() {
+function Footer({ onNavigate, onOpenServices }) {
   const year = new Date().getFullYear();
+
+  const handleLinkClick = (link) => (event) => {
+    if (link.action === "services") {
+      event.preventDefault();
+      if (onOpenServices) onOpenServices();
+    } else if (onNavigate) {
+      onNavigate();
+    }
+  };
 
   return (
     <footer className="site-footer">
@@ -571,7 +1234,9 @@ function Footer() {
           <ul>
             {NAV_LINKS.map((link) => (
               <li key={link.id}>
-                <a href={link.href}>{link.label}</a>
+                <a href={link.href} onClick={handleLinkClick(link)}>
+                  {link.label}
+                </a>
               </li>
             ))}
           </ul>
@@ -611,11 +1276,17 @@ function Footer() {
   );
 }
 
+function getRouteFromLocation() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("view") === "services") return { type: "services" };
+  const project = params.get("project");
+  if (project) return { type: "project", slug: project };
+  return { type: "home" };
+}
+
 export default function App() {
   const [manifest, setManifest] = useState([]);
-  const [activeSlug, setActiveSlug] = useState(
-    () => new URLSearchParams(window.location.search).get("project")
-  );
+  const [route, setRoute] = useState(getRouteFromLocation);
 
   useEffect(() => {
     fetch("/projects/manifest.json")
@@ -625,37 +1296,49 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const onPopState = () => {
-      setActiveSlug(new URLSearchParams(window.location.search).get("project"));
-    };
+    const onPopState = () => setRoute(getRouteFromLocation());
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  const openProject = (slug) => {
-    const url = new URL(window.location.href);
-    url.searchParams.set("project", slug);
-    window.history.pushState({}, "", url);
-    setActiveSlug(slug);
-    window.scrollTo(0, 0);
-  };
-
-  const closeProject = () => {
-    if (!activeSlug) return;
+  const goHome = () => {
+    if (route.type === "home") return;
     const url = new URL(window.location.href);
     url.searchParams.delete("project");
+    url.searchParams.delete("view");
     window.history.pushState({}, "", url);
-    setActiveSlug(null);
+    setRoute({ type: "home" });
     window.scrollTo(0, 0);
   };
 
-  const activeProject = activeSlug ? manifest.find((item) => item.slug === activeSlug) : null;
+  const openProject = (slug) => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("view");
+    url.searchParams.set("project", slug);
+    window.history.pushState({}, "", url);
+    setRoute({ type: "project", slug });
+    window.scrollTo(0, 0);
+  };
+
+  const openServices = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("project");
+    url.searchParams.set("view", "services");
+    window.history.pushState({}, "", url);
+    setRoute({ type: "services" });
+    window.scrollTo(0, 0);
+  };
+
+  const activeProject =
+    route.type === "project" ? manifest.find((item) => item.slug === route.slug) : null;
 
   return (
     <>
-      <Header onNavigate={closeProject} />
-      {activeProject ? (
-        <ProjectDetails project={activeProject} onBack={closeProject} />
+      <Header onNavigate={goHome} onOpenServices={openServices} />
+      {route.type === "project" && activeProject ? (
+        <ProjectDetails project={activeProject} onBack={goHome} />
+      ) : route.type === "services" ? (
+        <ServicesCatalog />
       ) : (
         <main>
           <Hero />
@@ -669,7 +1352,7 @@ export default function App() {
           <AppTeaser />
         </main>
       )}
-      <Footer />
+      <Footer onNavigate={goHome} onOpenServices={openServices} />
     </>
   );
 }
