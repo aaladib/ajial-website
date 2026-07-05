@@ -1277,11 +1277,32 @@ function Footer({ onNavigate, onOpenServices }) {
 }
 
 function getRouteFromLocation() {
+  if (window.location.pathname === "/app") return { type: "app-placeholder" };
   const params = new URLSearchParams(window.location.search);
   if (params.get("view") === "services") return { type: "services" };
   const project = params.get("project");
   if (project) return { type: "project", slug: project };
   return { type: "home" };
+}
+
+function AppComingSoon({ onBack }) {
+  return (
+    <main className="section app-teaser">
+      <div className="container app-teaser-inner">
+        <div className="section-heading section-heading-light">
+          <span className="section-label">تطبيق أجيال</span>
+          <h2>تطبيق أجيال قيد التطوير</h2>
+        </div>
+        <p className="app-teaser-text">
+          نعمل حالياً على تطوير تطبيق خاص بشركة أجيال المتطورة للاستثمار.
+          سيتم الإعلان عن تفاصيله وإطلاقه قريباً.
+        </p>
+        <button type="button" className="btn btn-accent" onClick={onBack}>
+          العودة إلى الصفحة الرئيسية
+        </button>
+      </div>
+    </main>
+  );
 }
 
 export default function App() {
@@ -1303,17 +1324,14 @@ export default function App() {
 
   const goHome = () => {
     if (route.type === "home") return;
-    const url = new URL(window.location.href);
-    url.searchParams.delete("project");
-    url.searchParams.delete("view");
+    const url = new URL("/", window.location.origin);
     window.history.pushState({}, "", url);
     setRoute({ type: "home" });
     window.scrollTo(0, 0);
   };
 
   const openProject = (slug) => {
-    const url = new URL(window.location.href);
-    url.searchParams.delete("view");
+    const url = new URL("/", window.location.origin);
     url.searchParams.set("project", slug);
     window.history.pushState({}, "", url);
     setRoute({ type: "project", slug });
@@ -1321,8 +1339,7 @@ export default function App() {
   };
 
   const openServices = () => {
-    const url = new URL(window.location.href);
-    url.searchParams.delete("project");
+    const url = new URL("/", window.location.origin);
     url.searchParams.set("view", "services");
     window.history.pushState({}, "", url);
     setRoute({ type: "services" });
@@ -1339,6 +1356,8 @@ export default function App() {
         <ProjectDetails project={activeProject} onBack={goHome} />
       ) : route.type === "services" ? (
         <ServicesCatalog />
+      ) : route.type === "app-placeholder" ? (
+        <AppComingSoon onBack={goHome} />
       ) : (
         <main>
           <Hero />
