@@ -582,7 +582,7 @@ function Header({ onNavigate, onOpenServices }) {
         <nav className={`main-nav ${menuOpen ? "open" : ""}`}>
           <ul>
             {NAV_LINKS.map((link) => (
-              <li key={link.id}>
+              <li key={link.id} className={link.cta ? "nav-cta-item" : undefined}>
                 <a
                   href={link.href}
                   onClick={handleLinkClick(link)}

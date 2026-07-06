@@ -208,9 +208,7 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  row-gap: 14px;
-  gap: 24px;
+  gap: 20px;
   max-width: 1600px;
   padding-top: 16px;
   padding-bottom: 16px;
@@ -220,6 +218,7 @@ section[id] {
   display: flex;
   align-items: center;
   gap: 14px;
+  flex-shrink: 0;
 }
 
 .brand-logo {
@@ -248,16 +247,59 @@ section[id] {
   text-transform: uppercase;
 }
 
+.main-nav {
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-border) transparent;
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent 0,
+    black 20px,
+    black calc(100% - 20px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to left,
+    transparent 0,
+    black 20px,
+    black calc(100% - 20px),
+    transparent 100%
+  );
+}
+
+.main-nav::-webkit-scrollbar {
+  height: 4px;
+}
+
+.main-nav::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray-border);
+  border-radius: 4px;
+}
+
+.main-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .main-nav ul {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 24px;
+  flex-wrap: nowrap;
+  gap: 22px;
+  padding: 2px 4px;
 }
 
 .main-nav li {
   flex-shrink: 0;
+}
+
+.nav-cta-item {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background-color: var(--color-white);
+  padding-left: 4px;
 }
 
 .main-nav a {
@@ -1438,21 +1480,6 @@ section[id] {
 
 /* Responsive */
 
-/* Compact desktop/tablet: keep every link visible (no hamburger), wrap the
-   nav onto its own full-width row below the logo so nothing overlaps it. */
-@media (min-width: 901px) and (max-width: 1400px) {
-  .main-nav {
-    width: 100%;
-    order: 3;
-    padding-top: 10px;
-    border-top: 1px solid var(--color-gray-border);
-  }
-
-  .main-nav ul {
-    width: 100%;
-  }
-}
-
 @media (max-width: 900px) {
   .menu-toggle {
     display: flex;
@@ -1466,6 +1493,9 @@ section[id] {
     background-color: var(--color-white);
     border-bottom: 1px solid var(--color-gray-border);
     display: none;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .main-nav.open {
@@ -1484,6 +1514,12 @@ section[id] {
     padding: 10px 0;
     font-size: 0.95rem;
     white-space: normal;
+  }
+
+  .nav-cta-item {
+    position: static;
+    background: none;
+    padding-left: 0;
   }
 
   .nav-cta-link {
