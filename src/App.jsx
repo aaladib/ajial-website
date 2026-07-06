@@ -820,7 +820,7 @@ function ProjectDetails({ project, onBack }) {
   );
 }
 
-function ServiceCard({ service, onAddToCart, onRequestQuote }) {
+function ServiceCard({ service, index = 0, onAddToCart, onRequestQuote }) {
   const [qty, setQty] = useState(service.minQty || 1);
   const [selectedOptionId, setSelectedOptionId] = useState(
     service.fixedOptions && service.fixedOptions.length > 0 ? service.fixedOptions[0].id : null
@@ -855,7 +855,7 @@ function ServiceCard({ service, onAddToCart, onRequestQuote }) {
   };
 
   return (
-    <div className="service-card">
+    <div className="service-card" style={{ animationDelay: `${(index % 6) * 70}ms` }}>
       <h3>{service.name}</h3>
       {service.description && <p className="service-description">{service.description}</p>}
 
@@ -1026,40 +1026,49 @@ function ServicesCatalog() {
   };
 
   return (
-    <main className="section services-page">
-      <div className="container">
-        <div className="section-heading">
-          <span className="section-label">خدمات أجيال المسعّرة</span>
-          <h2>كتالوج خدمات المقاولات</h2>
+    <main className="services-page">
+      <div className="services-hero">
+        <div className="container">
+          <div className="section-heading section-heading-light">
+            <span className="section-label">خدمات أجيال المسعّرة</span>
+            <h2>كتالوج خدمات المقاولات</h2>
+          </div>
+
+          <p className="services-intro">
+            شركة أجيال المتطورة للاستثمار شركة مقاولات عامة تعمل في الأعمال المعدنية،
+            وأعمال العظم، وأعمال التشطيب. الأسعار أدناه مبدئية لتسهيل التواصل، ويمكن
+            طلب عرض سعر مباشر عبر واتساب لأي خدمة.
+          </p>
         </div>
+      </div>
 
-        <p className="services-intro">
-          شركة أجيال المتطورة للاستثمار شركة مقاولات عامة تعمل في الأعمال المعدنية،
-          وأعمال العظم، وأعمال التشطيب. الأسعار أدناه مبدئية لتسهيل التواصل، ويمكن
-          طلب عرض سعر مباشر عبر واتساب لأي خدمة.
-        </p>
+      <div className="section services-content">
+        <div className="container">
+          <div className="services-notice">
+            <p>الأسعار تقديرية/مبدئية وتخضع لمراجعة أجيال قبل الاعتماد.</p>
+            <p>الأسعار داخل الرياض فقط ما لم يُذكر غير ذلك.</p>
+            <p>الأسعار لا تشمل الأعمال الإضافية غير المذكورة في الوصف.</p>
+            <p>لا يوجد دفع إلكتروني حالياً، سيتم تأكيد الطلب عبر فريق أجيال.</p>
+          </div>
 
-        <div className="services-notice">
-          <p>الأسعار تقديرية/مبدئية وتخضع لمراجعة أجيال قبل الاعتماد.</p>
-          <p>الأسعار داخل الرياض فقط ما لم يُذكر غير ذلك.</p>
-          <p>الأسعار لا تشمل الأعمال الإضافية غير المذكورة في الوصف.</p>
-          <p>لا يوجد دفع إلكتروني حالياً، سيتم تأكيد الطلب عبر فريق أجيال.</p>
-        </div>
+          <div className="services-tabs">
+            {SERVICE_CATEGORIES.map((category) => {
+              const count = SERVICES.filter((service) => service.category === category.id).length;
+              return (
+                <button
+                  key={category.id}
+                  type="button"
+                  className={`services-tab-btn ${activeCategory === category.id ? "active" : ""}`}
+                  onClick={() => setActiveCategory(category.id)}
+                >
+                  {category.label}
+                  {count > 0 && <span className="services-tab-count">{count}</span>}
+                </button>
+              );
+            })}
+          </div>
 
-        <div className="services-tabs">
-          {SERVICE_CATEGORIES.map((category) => (
-            <button
-              key={category.id}
-              type="button"
-              className={`services-tab-btn ${activeCategory === category.id ? "active" : ""}`}
-              onClick={() => setActiveCategory(category.id)}
-            >
-              {category.label}
-            </button>
-          ))}
-        </div>
-
-        {activeCategory === "custom" ? (
+          {activeCategory === "custom" ? (
           <div className="custom-project-panel">
             <h3>طلب عرض مشروع خاص</h3>
             <p>
@@ -1099,10 +1108,11 @@ function ServicesCatalog() {
           </div>
         ) : (
           <div className="services-grid">
-            {categoryServices.map((service) => (
+            {categoryServices.map((service, index) => (
               <ServiceCard
                 key={service.id}
                 service={service}
+                index={index}
                 onAddToCart={addToCart}
                 onRequestQuote={requestServiceQuote}
               />
@@ -1179,6 +1189,7 @@ function ServicesCatalog() {
               </button>
             </>
           )}
+        </div>
         </div>
       </div>
 
