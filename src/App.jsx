@@ -603,18 +603,23 @@ function Hero() {
   return (
     <section id="home" className="hero">
       <div className="container hero-content">
-        <p className="hero-eyebrow">مقاولات عامة | أعمال معدنية | مقاولات إنشائية | تشطيبات</p>
-        <h1>شركة أجيال المتطورة للاستثمار</h1>
-        <p className="hero-subtitle">
-          مقاولات معدنية، وأعمال إنشائية، وتشطيبات — تحت مظلة عمل واحدة.
-        </p>
+        <p className="hero-eyebrow">شركة أجيال المتطورة للاستثمار — مقاولات عامة، الرياض</p>
+        <h1>
+          نَبْنِي <span className="hero-highlight">أَجْيَالًا</span>
+        </h1>
         <p className="hero-text">
-          شركة مقاولات عامة تعمل في قطاعات الأعمال المعدنية، والمقاولات الإنشائية،
-          وأعمال التشطيب، وتقدم خدماتها في المملكة العربية السعودية.
+          هياكل معدنية، ساندوتش بانل، وتشطيبات تُنفّذ بدقة وتُسلّم بثقة.
         </p>
         <div className="hero-actions">
-          <a href="/app" className="btn btn-accent">الدخول إلى التطبيق</a>
-          <a href="#contact" className="btn btn-outline-light">تواصل معنا</a>
+          <a
+            href={buildWhatsAppLink("مرحباً، أرغب بالبدء بمشروع جديد مع أجيال المتطورة للاستثمار.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-accent"
+          >
+            ابدأ مشروعك
+          </a>
+          <a href="#projects" className="btn btn-outline-light">شاهد أعمالنا</a>
         </div>
         <ul className="hero-sector-tags">
           <li>الأعمال المعدنية</li>
