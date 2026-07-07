@@ -1,35 +1,4 @@
-import React, { Suspense, lazy, useEffect, useRef, useState } from "react";
-
-const HeroSteelScene = lazy(() => import("./HeroSteelScene.jsx"));
-
-function supportsWebGL() {
-  try {
-    const canvas = document.createElement("canvas");
-    return !!(
-      window.WebGLRenderingContext &&
-      (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
-    );
-  } catch (error) {
-    return false;
-  }
-}
-
-function HeroVisualFallback() {
-  return (
-    <div className="hero-visual-fallback">
-      <svg viewBox="0 0 200 180" width="100%" height="100%" role="img" aria-label="رسم توضيحي لهيكل معدني">
-        <g fill="none" stroke="#c9a24c" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M40 150 L140 150 L140 60 L40 60 Z" />
-          <path d="M80 118 L180 118 L180 28 L80 28 Z" />
-          <path d="M40 150 L80 118" />
-          <path d="M140 150 L180 118" />
-          <path d="M140 60 L180 28" />
-          <path d="M40 60 L80 28" />
-        </g>
-      </svg>
-    </div>
-  );
-}
+import React, { useEffect, useRef, useState } from "react";
 
 function Reveal({ children, as: Tag = "div", className = "", delay = 0 }) {
   const ref = useRef(null);
@@ -631,52 +600,32 @@ function Header({ onNavigate, onOpenServices }) {
 }
 
 function Hero() {
-  const [show3D, setShow3D] = useState(false);
-
-  useEffect(() => {
-    const isDesktop = window.matchMedia("(min-width: 900px)").matches;
-    if (isDesktop && supportsWebGL()) {
-      setShow3D(true);
-    }
-  }, []);
-
   return (
     <section id="home" className="hero">
       <div className="container hero-content">
-        <div className="hero-text-col">
-          <p className="hero-eyebrow">شركة أجيال المتطورة للاستثمار — مقاولات عامة، الرياض</p>
-          <h1>
-            نَبْنِي <span className="hero-highlight">أَجْيَالًا</span>
-          </h1>
-          <p className="hero-text">
-            هياكل معدنية، ساندوتش بانل، وتشطيبات تُنفّذ بدقة وتُسلّم بثقة.
-          </p>
-          <div className="hero-actions">
-            <a
-              href={buildWhatsAppLink("مرحباً، أرغب بالبدء بمشروع جديد مع أجيال المتطورة للاستثمار.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-accent"
-            >
-              ابدأ مشروعك
-            </a>
-            <a href="#projects" className="btn btn-outline-light">شاهد أعمالنا</a>
-          </div>
-          <ul className="hero-sector-tags">
-            <li>الأعمال المعدنية</li>
-            <li>المقاولات الإنشائية</li>
-            <li>أعمال التشطيب</li>
-          </ul>
+        <p className="hero-eyebrow">شركة أجيال المتطورة للاستثمار — مقاولات عامة، الرياض</p>
+        <h1>
+          نَبْنِي <span className="hero-highlight">أَجْيَالًا</span>
+        </h1>
+        <p className="hero-text">
+          هياكل معدنية، ساندوتش بانل، وتشطيبات تُنفّذ بدقة وتُسلّم بثقة.
+        </p>
+        <div className="hero-actions">
+          <a
+            href={buildWhatsAppLink("مرحباً، أرغب بالبدء بمشروع جديد مع أجيال المتطورة للاستثمار.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-accent"
+          >
+            ابدأ مشروعك
+          </a>
+          <a href="#projects" className="btn btn-outline-light">شاهد أعمالنا</a>
         </div>
-        <div className="hero-visual" aria-hidden="true">
-          {show3D ? (
-            <Suspense fallback={<HeroVisualFallback />}>
-              <HeroSteelScene />
-            </Suspense>
-          ) : (
-            <HeroVisualFallback />
-          )}
-        </div>
+        <ul className="hero-sector-tags">
+          <li>الأعمال المعدنية</li>
+          <li>المقاولات الإنشائية</li>
+          <li>أعمال التشطيب</li>
+        </ul>
       </div>
     </section>
   );
