@@ -775,14 +775,15 @@ function Projects({ manifest, onSelectProject }) {
               >
                 <div className="project-image-frame">
                   <img src={project.coverImage} alt={project.title} className="project-image" loading="lazy" />
+                  {project.category && <span className="project-category">{project.category}</span>}
                 </div>
                 <div className="project-body">
-                  {project.category && <span className="project-category">{project.category}</span>}
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
                   <div className="project-meta">
                     <span>الموقع: {project.location}</span>
                   </div>
+                  <span className="project-view-more">عرض التفاصيل</span>
                 </div>
               </button>
             </Reveal>
