@@ -1291,6 +1291,29 @@ function AppTeaser() {
   );
 }
 
+function FinalCta() {
+  return (
+    <section className="section final-cta">
+      <div className="container">
+        <Reveal className="final-cta-panel">
+          <h2>مشروعك القادم يبدأ من معاينة واضحة</h2>
+          <p className="final-cta-text">
+            تواصل معنا وشاركنا فكرة مشروعك، ونرتب لك الخطوة الأولى بوضوح.
+          </p>
+          <a
+            href={buildWhatsAppLink("مرحباً، أرغب بمشاركة فكرة مشروعي مع أجيال المتطورة للاستثمار.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-accent"
+          >
+            تواصل واتساب
+          </a>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function Footer({ onNavigate, onOpenServices }) {
   const year = new Date().getFullYear();
 
@@ -1436,6 +1459,7 @@ export default function App() {
           <WhyAjial />
           <Contact />
           <AppTeaser />
+          <FinalCta />
         </main>
       )}
       <Footer onNavigate={goHome} onOpenServices={openServices} />
