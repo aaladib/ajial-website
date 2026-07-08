@@ -707,6 +707,27 @@ function Sectors() {
 }
 
 function Workshop() {
+  const [active, setActive] = useState(0);
+  const total = WORKSHOP_IMAGES.length;
+  const touchStartX = useRef(null);
+
+  const go = (dir) => {
+    setActive((prev) => (prev + dir + total) % total);
+  };
+
+  const onTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(diff) > 40) {
+      // RTL: swipe left (negative) => next
+      go(diff < 0 ? 1 : -1);
+    }
+    touchStartX.current = null;
+  };
+
   return (
     <section id="workshop" className="section workshop">
       <div className="container">
@@ -718,12 +739,62 @@ function Workshop() {
           ننفّذ مراحل تصنيع وتجهيز الحديد داخل ورشتنا بالرياض، من القص واللحام
           حتى المعالجة والطلاء والتحميل.
         </p>
-        <div className="workshop-grid">
+
+        <div
+          className="workshop-carousel"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <button
+            type="button"
+            className="workshop-arrow workshop-arrow-right"
+            onClick={() => go(-1)}
+            aria-label="السابق"
+          >
+            ›
+          </button>
+
+          <div className="workshop-stage">
+            {WORKSHOP_IMAGES.map((item, index) => {
+              let pos = index - active;
+              if (pos > total / 2) pos -= total;
+              if (pos < -total / 2) pos += total;
+              const state =
+                pos === 0 ? "center" : pos === 1 ? "left" : pos === -1 ? "right" : "hidden";
+              return (
+                <figure
+                  key={item.id}
+                  className={`workshop-slide workshop-slide-${state}`}
+                  onClick={() => state !== "center" && setActive(index)}
+                >
+                  <img src={item.image} alt={item.caption} className="workshop-image" loading="lazy" />
+                  {state === "center" && (
+                    <figcaption className="workshop-caption">{item.caption}</figcaption>
+                  )}
+                </figure>
+              );
+            })}
+          </div>
+
+          <button
+            type="button"
+            className="workshop-arrow workshop-arrow-left"
+            onClick={() => go(1)}
+            aria-label="التالي"
+          >
+            ‹
+          </button>
+        </div>
+
+        <div className="workshop-dots">
           {WORKSHOP_IMAGES.map((item, index) => (
-            <Reveal key={item.id} className="workshop-item" delay={(index % 3) * 100}>
-              <img src={item.image} alt={item.caption} className="workshop-image" loading="lazy" />
-              <span className="workshop-caption">{item.caption}</span>
-            </Reveal>
+            <button
+              key={item.id}
+              type="button"
+              className={`workshop-dot ${index === active ? "active" : ""}`}
+              onClick={() => setActive(index)}
+              aria-label={`صورة ${index + 1}`}
+            />
           ))}
         </div>
       </div>
