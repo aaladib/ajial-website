@@ -612,7 +612,7 @@ function Hero() {
       <div className="container hero-content">
         <p className="hero-eyebrow">شركة أجيال المتطورة للاستثمار — مقاولات عامة، الرياض</p>
         <h1>
-          نَبْنِي <span className="hero-highlight">أَجْيَالًا</span>
+          نبني <span className="hero-highlight">أجيالاً</span>
         </h1>
         <p className="hero-text">
           هياكل معدنية، ساندوتش بانل، وتشطيبات تُنفّذ بدقة وتُسلّم بثقة.
