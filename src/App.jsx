@@ -1217,6 +1217,38 @@ function ServicesCatalog() {
 }
 
 function WhyAjial() {
+  const cardRef = useRef(null);
+  const [started, setStarted] = useState(false);
+  const [revealed, setRevealed] = useState(0); // number of items fully shown
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStarted(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return undefined;
+    if (revealed >= WHY_AJIAL.length) return undefined;
+    setLoading(true);
+    const spin = setTimeout(() => {
+      setLoading(false);
+      setRevealed((n) => n + 1);
+    }, 650);
+    return () => clearTimeout(spin);
+  }, [started, revealed]);
+
   return (
     <section id="why" className="section why-ajial">
       <div className="container">
@@ -1224,14 +1256,23 @@ function WhyAjial() {
           <span className="section-label">لماذا أجيال</span>
           <h2>أسباب الثقة في التعامل معنا</h2>
         </div>
-        <div className="why-grid">
-          {WHY_AJIAL.map((reason, index) => (
-            <Reveal key={reason.title} className="why-card" delay={(index % 2) * 100}>
-              <span className="why-number">{String(index + 1).padStart(2, "0")}</span>
-              <h3>{reason.title}</h3>
-              <p>{reason.description}</p>
-            </Reveal>
-          ))}
+        <div className="why-card-single" ref={cardRef}>
+          <ul className="why-list">
+            {WHY_AJIAL.map((reason, index) => (
+              <li
+                key={reason.title}
+                className={`why-list-item ${index < revealed ? "shown" : ""}`}
+              >
+                <span className="why-check" aria-hidden="true">✓</span>
+                <span className="why-list-title">{reason.title}</span>
+              </li>
+            ))}
+          </ul>
+          {loading && revealed < WHY_AJIAL.length && (
+            <div className="why-loader" aria-hidden="true">
+              <span className="why-spinner" />
+            </div>
+          )}
         </div>
       </div>
     </section>
