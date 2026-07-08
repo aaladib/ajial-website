@@ -615,7 +615,7 @@ function Hero() {
           نبني <span className="hero-highlight">أجيالاً</span>
         </h1>
         <p className="hero-text">
-          هياكل معدنية، ساندوتش بانل، وتشطيبات تُنفّذ بدقة وتُسلّم بثقة.
+          مقاولات وأعمال إنشائية، هياكل معدنية، وتشطيبات — تُنفّذ بدقة وتُسلّم بثقة.
         </p>
         <div className="hero-actions">
           <a
@@ -629,9 +629,10 @@ function Hero() {
           <a href="#projects" className="btn btn-outline-light">شاهد أعمالنا</a>
         </div>
         <ul className="hero-sector-tags">
+          <li>مقاولات عامة</li>
+          <li>أعمال إنشائية</li>
+          <li>تشطيبات</li>
           <li>الأعمال المعدنية</li>
-          <li>المقاولات الإنشائية</li>
-          <li>أعمال التشطيب</li>
         </ul>
       </div>
     </section>
