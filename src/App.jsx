@@ -513,6 +513,13 @@ const WHY_AJIAL = [
   },
 ];
 
+const CREDENTIALS = [
+  { label: "السجل التجاري", value: "1009069810" },
+  { label: "الرقم الوطني الموحد", value: "7040974326" },
+  { label: "الرقم الضريبي", value: "312397372600003" },
+  { label: "عضوية الهيئة السعودية للمقاولين", value: "638863880" },
+];
+
 function Header({ onNavigate, onOpenServices }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef(null);
@@ -1231,6 +1238,28 @@ function WhyAjial() {
   );
 }
 
+function Credentials() {
+  return (
+    <section id="credentials" className="section credentials">
+      <div className="container">
+        <div className="section-heading">
+          <span className="section-label">التوثيق الرسمي</span>
+          <h2>بيانات الشركة النظامية</h2>
+        </div>
+        <div className="credentials-grid">
+          {CREDENTIALS.map((item, index) => (
+            <Reveal key={item.label} className="credential-card" delay={(index % 2) * 100}>
+              <span className="credential-label">{item.label}</span>
+              <span className="credential-value" dir="ltr">{item.value}</span>
+            </Reveal>
+          ))}
+        </div>
+        <p className="credentials-note">جميع البيانات قابلة للتحقق عبر الجهات الرسمية.</p>
+      </div>
+    </section>
+  );
+}
+
 function Contact() {
   return (
     <section id="contact" className="section contact">
@@ -1494,6 +1523,7 @@ export default function App() {
           <Methodology />
           <Projects manifest={manifest} onSelectProject={openProject} />
           <WhyAjial />
+          <Credentials />
           <Contact />
           <AppTeaser />
           <FinalCta />
