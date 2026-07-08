@@ -1446,6 +1446,24 @@ function Footer({ onNavigate, onOpenServices }) {
               </svg>
             </a>
           </div>
+
+          <div className="footer-map">
+            <iframe
+              title="موقع أجيال المتطورة للاستثمار على الخريطة"
+              src="https://www.google.com/maps?q=Yahya%20Ibn%20Abi%20Kathir%2C%20An%20Noor%2C%20Riyadh%2014321&output=embed"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="footer-map-frame"
+            ></iframe>
+            <a
+              href="https://maps.app.goo.gl/vtUjFHqQ4XKxsYAVA"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-map-link"
+            >
+              احصل على الاتجاهات
+            </a>
+          </div>
         </div>
 
         <div className="footer-col">
