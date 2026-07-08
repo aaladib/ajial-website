@@ -1122,6 +1122,7 @@ section[id] {
   display: flex;
   gap: 12px;
   margin-top: 20px;
+  justify-content: center;
 }
 
 .footer-social-link {
@@ -2143,8 +2144,9 @@ section[id] {
 
 /* ===== Footer map ===== */
 .footer-map {
-  margin-top: 20px;
+  margin: 20px auto 0;
   max-width: 340px;
+  text-align: center;
 }
 .footer-map-frame {
   width: 100%;
