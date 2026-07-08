@@ -2028,38 +2028,37 @@ section[id] {
   background: var(--bg-surface);
   border: 1px solid rgba(184, 144, 47, 0.35);
   border-radius: var(--radius);
-  padding: 20px 18px;
+  padding: 14px 12px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   text-align: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
 }
 .credential-label {
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 .credential-value {
   color: var(--color-accent);
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 .credentials-note {
-  margin-top: 22px;
+  margin-top: 18px;
   text-align: center;
   color: var(--text-secondary);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
 }
 @media (max-width: 900px) {
   .credentials-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
-}
-@media (max-width: 520px) {
-  .credentials-grid {
-    grid-template-columns: 1fr;
+  .credential-value {
+    font-size: 0.95rem;
   }
 }
