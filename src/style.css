@@ -230,23 +230,25 @@ section[id] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  max-width: 1600px;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  gap: 28px;
+  max-width: 1760px;
+  padding-top: 18px;
+  padding-bottom: 18px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
   flex-shrink: 0;
+  padding: 4px 0;
 }
 
 .brand-logo {
-  height: 64px;
+  height: clamp(82px, 5.2vw, 104px);
   width: auto;
   object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(184, 144, 47, 0.2));
 }
 
 .brand-text {
@@ -257,14 +259,15 @@ section[id] {
 
 .brand-name {
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: clamp(1.35rem, 1.2vw, 1.72rem);
+  line-height: 1.2;
   color: var(--text-primary);
 }
 
 .brand-tagline {
-  font-size: 0.75rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: 0.8px;
+  letter-spacing: 1px;
   color: var(--color-steel-light);
   text-transform: uppercase;
 }
@@ -1820,19 +1823,19 @@ section[id] {
   }
 
   .brand {
-    gap: 10px;
+    gap: 12px;
   }
 
   .brand-logo {
-    height: 44px;
+    height: 58px;
   }
 
   .brand-name {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
   }
 
   .brand-tagline {
-    font-size: 0.65rem;
+    font-size: 0.68rem;
   }
 
   /* Hero */
