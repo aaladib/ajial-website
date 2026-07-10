@@ -673,6 +673,9 @@ function About() {
           <div className="about-fact">
             <span className="about-fact-label">نطاق العمل</span>
             <span className="about-fact-value">أعمال معدنية، مقاولات إنشائية، تشطيبات</span>
+          </div>
+          <div className="about-fact about-profile-fact">
+            <span className="about-fact-label">بروفايل الشركة</span>
             <a
               href="https://drive.google.com/file/d/1556BhTPDLIRQ-aZU7fZTDMC7W69pXKdr/view?usp=drivesdk"
               target="_blank"
