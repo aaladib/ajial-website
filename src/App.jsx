@@ -824,13 +824,13 @@ function Workshop() {
     <section id="workshop" className="section workshop">
       <div className="container workshop-stack">
         <WorkshopCarousel
-          label="أعمال الحديد في ورشتنا"
+          label="ورشة أجيال للحديد"
           title="ورشة الحديد - الرياض"
           intro="ننفّذ مراحل تصنيع وتجهيز الحديد داخل ورشتنا بالرياض، من القص واللحام حتى المعالجة والطلاء والتحميل."
           images={WORKSHOP_IMAGES}
         />
         <WorkshopCarousel
-          label="أعمال الخشب في ورشتنا"
+          label="ورشة أجيال للأخشاب"
           title="ورشة الخشب - الرياض"
           intro="ننفّذ أعمال الخشب داخل ورشتنا بالرياض، من القص والتفصيل حتى التجميع والتشطيب والتجهيز للتسليم."
           images={WOOD_WORKSHOP_IMAGES}
