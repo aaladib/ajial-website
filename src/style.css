@@ -258,10 +258,49 @@ section[id] {
 }
 
 .brand-name {
+  display: inline-block;
   font-weight: 700;
   font-size: clamp(1.35rem, 1.2vw, 1.72rem);
   line-height: 1.2;
-  color: var(--text-primary);
+  color: transparent;
+  background: linear-gradient(
+    100deg,
+    #fff7d7 0%,
+    #d8b85d 18%,
+    #a97922 34%,
+    #f3d17b 50%,
+    #b8902f 66%,
+    #fff1bd 82%,
+    #d1a646 100%
+  );
+  background-size: 240% 100%;
+  background-position: 100% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(201, 162, 76, 0.16));
+  animation: brandNameGoldWave 5s ease-in-out infinite alternate;
+}
+
+@keyframes brandNameGoldWave {
+  0% {
+    background-position: 100% 50%;
+    filter: drop-shadow(0 0 8px rgba(201, 162, 76, 0.12));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(201, 162, 76, 0.28));
+  }
+  100% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 10px rgba(201, 162, 76, 0.18));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-name {
+    animation: none;
+    background-position: 50% 50%;
+  }
 }
 
 .brand-tagline {
