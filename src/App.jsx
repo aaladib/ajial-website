@@ -457,14 +457,15 @@ const WORKSHOP_IMAGES = [
 ];
 
 const WOOD_WORKSHOP_IMAGES = [
-  { id: 1, image: "/projects/Woodwork/1.png", caption: "تجهيز ألواح الخشب" },
-  { id: 2, image: "/projects/Woodwork/2.png", caption: "قص وتفصيل الخشب" },
-  { id: 3, image: "/projects/Woodwork/3.png", caption: "أعمال التجميع والتركيب" },
-  { id: 4, image: "/projects/Woodwork/4.png", caption: "معالجة الأسطح الخشبية" },
-  { id: 5, image: "/projects/Woodwork/5.png", caption: "تفاصيل التشطيب" },
-  { id: 6, image: "/projects/Woodwork/6.png", caption: "أعمال الدهان والتلميع" },
-  { id: 7, image: "/projects/Woodwork/7.png", caption: "تجهيز الأعمال قبل التسليم" },
-  { id: 8, image: "/projects/Woodwork/8.png", caption: "نماذج من الأعمال الخشبية" },
+  { id: 1, image: "/projects/Woodwork%20factor/1%20(1).jpeg", caption: "أعمال الأخشاب في ورشة أجيال" },
+  { id: 2, image: "/projects/Woodwork%20factor/1%20(2).jpeg", caption: "تفاصيل التصنيع الخشبي" },
+  { id: 3, image: "/projects/Woodwork%20factor/1%20(3).jpeg", caption: "تجهيز وتنفيذ الأعمال الخشبية" },
+  { id: 4, image: "/projects/Woodwork%20factor/1%20(4).jpeg", caption: "نماذج من أعمال ورشة الخشب" },
+  { id: 5, image: "/projects/Woodwork%20factor/1%20(5).jpeg", caption: "تشطيبات خشبية مخصصة" },
+  { id: 6, image: "/projects/Woodwork%20factor/1%20(6).jpeg", caption: "تفاصيل الخشب والتجميع" },
+  { id: 7, image: "/projects/Woodwork%20factor/1%20(7).jpeg", caption: "أعمال خشبية جاهزة للتسليم" },
+  { id: 8, image: "/projects/Woodwork%20factor/1%20(8).jpeg", caption: "جودة التشطيب الخشبي" },
+  { id: 9, image: "/projects/Woodwork%20factor/1%20(9).jpeg", caption: "تنفيذ أعمال الأخشاب" },
 ];
 
 const PROJECT_TEXT = [
