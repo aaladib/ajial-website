@@ -654,6 +654,17 @@ section[id] {
   background-color: var(--color-navy-dark);
 }
 
+.workshop-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+.workshop-block + .workshop-block {
+  padding-top: 88px;
+  border-top: 1px solid rgba(184, 144, 47, 0.22);
+}
+
 .workshop-intro {
   text-align: center;
   max-width: 640px;

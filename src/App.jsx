@@ -37,7 +37,7 @@ const NAV_LINKS = [
   { id: "home", label: "الرئيسية", href: "#home" },
   { id: "about", label: "من نحن", href: "#about" },
   { id: "sectors", label: "قطاعات الأعمال", href: "#sectors" },
-  { id: "workshop", label: "ورشة الحديد", href: "#workshop" },
+  { id: "workshop", label: "ورش العمل", href: "#workshop" },
   { id: "methodology", label: "منهجية العمل", href: "#methodology" },
   { id: "projects", label: "معرض المشاريع", href: "#projects" },
   { id: "services", label: "خدمات أجيال المسعّرة", href: "#services", action: "services" },
@@ -456,6 +456,17 @@ const WORKSHOP_IMAGES = [
   { id: 6, image: "/projects/steeling-06.jpeg", caption: "خارج الورشة" },
 ];
 
+const WOOD_WORKSHOP_IMAGES = [
+  { id: 1, image: "/projects/Woodwork/1.png", caption: "تجهيز ألواح الخشب" },
+  { id: 2, image: "/projects/Woodwork/2.png", caption: "قص وتفصيل الخشب" },
+  { id: 3, image: "/projects/Woodwork/3.png", caption: "أعمال التجميع والتركيب" },
+  { id: 4, image: "/projects/Woodwork/4.png", caption: "معالجة الأسطح الخشبية" },
+  { id: 5, image: "/projects/Woodwork/5.png", caption: "تفاصيل التشطيب" },
+  { id: 6, image: "/projects/Woodwork/6.png", caption: "أعمال الدهان والتلميع" },
+  { id: 7, image: "/projects/Woodwork/7.png", caption: "تجهيز الأعمال قبل التسليم" },
+  { id: 8, image: "/projects/Woodwork/8.png", caption: "نماذج من الأعمال الخشبية" },
+];
+
 const PROJECT_TEXT = [
   {
     title: "مشاريعنا في الأعمال الخرسانية",
@@ -717,9 +728,9 @@ function Sectors() {
   );
 }
 
-function Workshop() {
+function WorkshopCarousel({ label, title, intro, images }) {
   const [active, setActive] = useState(0);
-  const total = WORKSHOP_IMAGES.length;
+  const total = images.length;
   const touchStartX = useRef(null);
 
   const go = (dir) => {
@@ -740,74 +751,90 @@ function Workshop() {
   };
 
   return (
-    <section id="workshop" className="section workshop">
-      <div className="container">
-        <div className="section-heading section-heading-light">
-          <span className="section-label">أعمال الحديد في ورشتنا</span>
-          <h2>ورشة الحديد - الرياض</h2>
-        </div>
-        <p className="workshop-intro">
-          ننفّذ مراحل تصنيع وتجهيز الحديد داخل ورشتنا بالرياض، من القص واللحام
-          حتى المعالجة والطلاء والتحميل.
-        </p>
+    <div className="workshop-block">
+      <div className="section-heading section-heading-light">
+        <span className="section-label">{label}</span>
+        <h2>{title}</h2>
+      </div>
+      <p className="workshop-intro">{intro}</p>
 
-        <div
-          className="workshop-carousel"
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
+      <div
+        className="workshop-carousel"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        <button
+          type="button"
+          className="workshop-arrow workshop-arrow-right"
+          onClick={() => go(-1)}
+          aria-label="السابق"
         >
-          <button
-            type="button"
-            className="workshop-arrow workshop-arrow-right"
-            onClick={() => go(-1)}
-            aria-label="السابق"
-          >
-            ›
-          </button>
+          ›
+        </button>
 
-          <div className="workshop-stage">
-            {WORKSHOP_IMAGES.map((item, index) => {
-              let pos = index - active;
-              if (pos > total / 2) pos -= total;
-              if (pos < -total / 2) pos += total;
-              const state =
-                pos === 0 ? "center" : pos === 1 ? "left" : pos === -1 ? "right" : "hidden";
-              return (
-                <figure
-                  key={item.id}
-                  className={`workshop-slide workshop-slide-${state}`}
-                  onClick={() => state !== "center" && setActive(index)}
-                >
-                  <img src={item.image} alt={item.caption} className="workshop-image" loading="lazy" />
-                  {state === "center" && (
-                    <figcaption className="workshop-caption">{item.caption}</figcaption>
-                  )}
-                </figure>
-              );
-            })}
-          </div>
-
-          <button
-            type="button"
-            className="workshop-arrow workshop-arrow-left"
-            onClick={() => go(1)}
-            aria-label="التالي"
-          >
-            ‹
-          </button>
+        <div className="workshop-stage">
+          {images.map((item, index) => {
+            let pos = index - active;
+            if (pos > total / 2) pos -= total;
+            if (pos < -total / 2) pos += total;
+            const state =
+              pos === 0 ? "center" : pos === 1 ? "left" : pos === -1 ? "right" : "hidden";
+            return (
+              <figure
+                key={item.id}
+                className={`workshop-slide workshop-slide-${state}`}
+                onClick={() => state !== "center" && setActive(index)}
+              >
+                <img src={item.image} alt={item.caption} className="workshop-image" loading="lazy" />
+                {state === "center" && (
+                  <figcaption className="workshop-caption">{item.caption}</figcaption>
+                )}
+              </figure>
+            );
+          })}
         </div>
 
-        <div className="workshop-dots">
-          {WORKSHOP_IMAGES.map((item, index) => (
-            <button
-              key={item.id}
-              type="button"
-              className={`workshop-dot ${index === active ? "active" : ""}`}
-              onClick={() => setActive(index)}
-              aria-label={`صورة ${index + 1}`}
-            />
-          ))}
-        </div>
+        <button
+          type="button"
+          className="workshop-arrow workshop-arrow-left"
+          onClick={() => go(1)}
+          aria-label="التالي"
+        >
+          ‹
+        </button>
+      </div>
+
+      <div className="workshop-dots">
+        {images.map((item, index) => (
+          <button
+            key={item.id}
+            type="button"
+            className={`workshop-dot ${index === active ? "active" : ""}`}
+            onClick={() => setActive(index)}
+            aria-label={`صورة ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Workshop() {
+  return (
+    <section id="workshop" className="section workshop">
+      <div className="container workshop-stack">
+        <WorkshopCarousel
+          label="أعمال الحديد في ورشتنا"
+          title="ورشة الحديد - الرياض"
+          intro="ننفّذ مراحل تصنيع وتجهيز الحديد داخل ورشتنا بالرياض، من القص واللحام حتى المعالجة والطلاء والتحميل."
+          images={WORKSHOP_IMAGES}
+        />
+        <WorkshopCarousel
+          label="أعمال الخشب في ورشتنا"
+          title="ورشة الخشب - الرياض"
+          intro="ننفّذ أعمال الخشب داخل ورشتنا بالرياض، من القص والتفصيل حتى التجميع والتشطيب والتجهيز للتسليم."
+          images={WOOD_WORKSHOP_IMAGES}
+        />
       </div>
     </section>
   );
