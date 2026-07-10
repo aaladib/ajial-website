@@ -249,6 +249,23 @@ section[id] {
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 10px 20px rgba(184, 144, 47, 0.2));
+  transform-origin: center;
+  animation: brandLogoGoldPulse 4.8s ease-in-out infinite alternate;
+}
+
+@keyframes brandLogoGoldPulse {
+  0% {
+    transform: translateX(0) scale(1);
+    filter: drop-shadow(0 8px 16px rgba(184, 144, 47, 0.18)) brightness(1);
+  }
+  50% {
+    transform: translateX(-2px) scale(1.04);
+    filter: drop-shadow(0 0 20px rgba(216, 184, 93, 0.35)) brightness(1.12);
+  }
+  100% {
+    transform: translateX(2px) scale(1.02);
+    filter: drop-shadow(0 10px 24px rgba(184, 144, 47, 0.26)) brightness(1.05);
+  }
 }
 
 .brand-text {
@@ -297,6 +314,10 @@ section[id] {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .brand-logo {
+    animation: none;
+  }
+
   .brand-name {
     animation: none;
     background-position: 50% 50%;
@@ -1877,7 +1898,7 @@ section[id] {
   }
 
   .brand-logo {
-    height: 58px;
+    height: clamp(82px, 20vw, 96px);
   }
 
   .brand-name {
