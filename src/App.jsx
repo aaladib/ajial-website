@@ -664,7 +664,7 @@ function About() {
         <Reveal className="about-facts" delay={120}>
           <div className="about-fact">
             <span className="about-fact-label">المقر الرئيسي</span>
-            <span className="about-fact-value">الرياض، المملكة العربية السعودية</span>
+            <span className="about-fact-value">الرياض، مخرج 18، حي النور</span>
           </div>
           <div className="about-fact">
             <span className="about-fact-label">النشاط</span>
@@ -672,7 +672,7 @@ function About() {
           </div>
           <div className="about-fact">
             <span className="about-fact-label">نطاق العمل</span>
-            <span className="about-fact-value">أعمال معدنية، مقاولات إنشائية، تشطيبات</span>
+            <span className="about-fact-value">الأعمال الإنشائية، أعمال التشطيب، الأعمال المعدنية</span>
           </div>
           <div className="about-fact about-profile-fact">
             <span className="about-fact-label">بروفايل الشركة</span>
