@@ -580,7 +580,19 @@ function Header({ onNavigate, onOpenServices }) {
 
       <div className="container header-inner">
         <a href="#home" className="brand" onClick={handleBrandClick}>
-          <img src="/logo.png" alt="شعار أجيال المتطورة للاستثمار" className="brand-logo" />
+          <span className="brand-logo-wrap" aria-hidden="true">
+            <video
+              src="/projects/media/logo-video.mp4"
+              poster="/logo.png"
+              className="brand-logo brand-logo-video"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+            />
+            <img src="/logo.png" alt="" className="brand-logo brand-logo-static" />
+          </span>
           <span className="brand-text">
             <span className="brand-name">أجيال المتطورة للاستثمار</span>
             <span className="brand-tagline">General Contracting</span>

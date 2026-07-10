@@ -244,6 +244,14 @@ section[id] {
   padding: 4px 0;
 }
 
+.brand-logo-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 .brand-logo {
   height: clamp(82px, 5.2vw, 104px);
   width: auto;
@@ -251,6 +259,14 @@ section[id] {
   filter: drop-shadow(0 10px 20px rgba(184, 144, 47, 0.2));
   transform-origin: center;
   animation: brandLogoGoldPulse 4.8s ease-in-out infinite alternate;
+}
+
+.brand-logo-video {
+  display: block;
+}
+
+.brand-logo-static {
+  display: none;
 }
 
 @keyframes brandLogoGoldPulse {
@@ -314,6 +330,14 @@ section[id] {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .brand-logo-video {
+    display: none;
+  }
+
+  .brand-logo-static {
+    display: block;
+  }
+
   .brand-logo {
     animation: none;
   }
